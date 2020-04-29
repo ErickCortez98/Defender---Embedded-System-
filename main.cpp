@@ -60,6 +60,7 @@
 #include "UART.h"
 #include "Timer0.h"
 #include "Timer1.h"
+#include "PlayerShip.h"
 
 
 SlidePot my(1500,0);
@@ -68,67 +69,54 @@ extern "C" void DisableInterrupts(void);
 extern "C" void EnableInterrupts(void);
 extern "C" void SysTick_Handler(void);
 
-// Creating a struct for the Sprite.
-typedef enum {dead,alive} status_t;
-struct sprite{
-  uint32_t x;      // x coordinate
-  uint32_t y;      // y coordinate
-  const unsigned short *image; // ptr->image
-  status_t life;            // dead/alive
-};          
-typedef struct sprite sprite_t;
 
-sprite_t bill={60,9,SmallEnemy20pointB,alive};
+PlayerShip Player = PlayerShip(32, 80, PlayerShipIm, 21, 10);
+SlidePot Joystick(158,16);
+
 
 uint32_t time = 0;
-volatile uint32_t flag;
-void background(void){
-  flag = 1; // semaphore
-  if(bill.life == alive){
-    bill.y++;
-  }
-  if(bill.y>155){
-    bill.life = dead;
-  }
-}
+
 void clock(void){
   time++;
 }
+
+void background(void){
+  Joystick.Save(ADC_In());
+  
+  //x needs to be changed based on button input, 32 is placeholder==================
+  Player.UpdatePos(32, Joystick.ADCsample());
+  Player.Draw();
+}
+
+void wait(uint32_t sec){
+  uint32_t i = time;
+  while((time - i) < sec){}
+}
+
 int main(void){
   PLL_Init(Bus80MHz);       // Bus clock is 80 MHz 
+  ADC_Init();
   Random_Init(1);
   Output_Init();
-  Timer0_Init(&background,1600000); // 50 Hz
   Timer1_Init(&clock,80000000); // 1 Hz
   EnableInterrupts();
-  ST7735_DrawBitmap(52, 159, PlayerShip0, 18,8); // player ship middle bottom
-  ST7735_DrawBitmap(53, 151, Bunker0, 18,5);
-  ST7735_DrawBitmap(0, 9, SmallEnemy10pointA, 16,10);
-  ST7735_DrawBitmap(20,9, SmallEnemy10pointB, 16,10);
-  ST7735_DrawBitmap(40, 9, SmallEnemy20pointA, 16,10);
-  ST7735_DrawBitmap(80, 9, SmallEnemy30pointA, 16,10);
-  ST7735_DrawBitmap(100, 9, SmallEnemy30pointB, 16,10);
-  while(bill.life == alive){
-    while(flag==0){};
-    flag = 0;
-    ST7735_DrawBitmap(bill.x,bill.y,bill.image,16,10);
-  }
+  
+  
 
-  ST7735_FillScreen(0x0000);            // set screen to black
-  ST7735_SetCursor(1, 1);
-  ST7735_OutString((char*)"GAME OVER");
-  ST7735_SetCursor(1, 2);
-  ST7735_SetTextColor(ST7735_WHITE);
-  ST7735_OutString((char*)"Nice try,");
-  ST7735_SetCursor(1, 3);
-  ST7735_OutString((char*)"Earthling!");
-  ST7735_SetCursor(2, 4);
-  ST7735_SetTextColor(ST7735_WHITE);
+//  ST7735_FillScreen(0x0000);            // set screen to black
+//  ST7735_SetTextColor(ST7735_WHITE);
+//  ST7735_SetCursor(1, 1);
+//  ST7735_OutString((char*)"DEFENDER");
+//  ST7735_SetCursor(1, 2);
+//  ST7735_SetTextColor(ST7735_WHITE);
+//  ST7735_OutString((char*)"By Jaxon & Erick");
+//  wait(2);//wait 2 seconds before clearing screen
+  ST7735_FillScreen(0x0000);
+  
+  Timer0_Init(&background,1600000); // 50 Hz
+  
   while(1){
-    while(flag==0){};
-    flag = 0;
-    ST7735_SetCursor(2, 4);
-    ST7735_OutUDec(time);
+    
   }
 
 }

@@ -442,6 +442,16 @@
               <FileType>8</FileType>
               <FilePath>.\FIFO.cpp</FilePath>
             </File>
+            <File>
+              <FileName>PlayerShip.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\PlayerShip.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Sprite.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\Sprite.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
