@@ -6,8 +6,10 @@
 #include <stdint.h>
 #include "Images.h"
 
+#define SCREENWIDTH 160
+
 Bullet::Bullet(){
-	 bulletSprite = Sprite(32, 80,  BulletImage, 8, 5);
+	 bulletSprite = Sprite(32, 80,  BulletImage, 5, 8);
 };
 
 //helper function to get the even x position used in fireBullet function
@@ -31,8 +33,8 @@ void Bullet::UpdatePos(uint16_t x, uint16_t y){
 void Bullet::fireBullet(PlayerShip Player){
 	uint8_t x_position = Player.sprite.Getx();
 	x_position = makeCloseEven(x_position);	//getting only even x positions as recommended in the lab descriptor 
-	//TODO: Change 107 for the actual width of the LCD
-	while(x_position < 107){
+	
+	while(x_position < SCREENWIDTH){
 		this->UpdatePos(x_position+20, Player.sprite.Gety()-2);
 		this->Draw();
 		x_position+=2;
