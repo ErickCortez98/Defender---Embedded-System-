@@ -79,7 +79,6 @@ PlayerShip Player;
 Bullet bullet;
 SlidePot Joystick(158,16);
 
-
 uint32_t time = 0;
 
 
@@ -91,7 +90,8 @@ void GPIOPortE_Handler(void){
 	//polling for FireButton
 	if(GPIO_PORTE_RIS_R&0x1){		
 		GPIO_PORTE_ICR_R = 0x1; //Acknowledge flag 0
-		bullet.fireBullet(Player);
+		//Bullet bullet; //we create a new instance of bullet because each bullet is independent 
+		bullet.fireBullet(Player); //we fire the bullet
 	}
 	//polling for HyperButton
 	if(GPIO_PORTE_RIS_R&0x2){		
@@ -110,6 +110,7 @@ void background(void){
   //x needs to be changed based on button input, 32 is placeholder==================
   Player.UpdatePos(32, Joystick.ADCsample());
   Player.Draw();
+
 }
 
 void wait(uint32_t sec){

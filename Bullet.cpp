@@ -8,8 +8,10 @@
 
 #define SCREENWIDTH 160
 
+uint8_t fireBulletFlag = 0;
+
 Bullet::Bullet(){
-	 bulletSprite = Sprite(32, 80,  BulletImage, 5, 8);
+	 bulletSprite = Sprite(32, 80,  BulletImage, 5, 11);
 };
 
 //helper function to get the even x position used in fireBullet function
@@ -34,10 +36,10 @@ void Bullet::fireBullet(PlayerShip Player){
 	uint8_t x_position = Player.sprite.Getx();
 	x_position = makeCloseEven(x_position);	//getting only even x positions as recommended in the lab descriptor 
 	
-	while(x_position < SCREENWIDTH){
-		this->UpdatePos(x_position+20, Player.sprite.Gety()-2);
+	while(x_position < SCREENWIDTH+5){
+		this->UpdatePos(x_position+5, Player.sprite.Gety()+1);
 		this->Draw();
-		x_position+=2;
+		x_position += 2;
 		//delay
 		for(int i = 0; i < 10000; i++){
 		}
