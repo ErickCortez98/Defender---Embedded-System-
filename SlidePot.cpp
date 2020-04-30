@@ -6,7 +6,7 @@
 
 #include <stdint.h>
 #include "SlidePot.h"
-#include "../inc/tm4c123gh6pm.h"
+#include "C:\Keil_v5\EE319KwareSpring2020\inc\TM4C123gh6pm.h"
 
 // ADC initialization function 
 // Input: none

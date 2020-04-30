@@ -23,7 +23,7 @@
  
 #include <stdint.h>
 #include "PLL.h"
-#include "../inc/tm4c123gh6pm.h"
+#include "C:\Keil_v5\EE319KwareSpring2020\inc\TM4C123gh6pm.h"
 
 // The #define statement SYSDIV2 in PLL.h
 // initializes the PLL to the desired frequency.
