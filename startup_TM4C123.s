@@ -368,7 +368,9 @@ GPIOD_Handler\
 GPIOE_Handler\
                 PROC
                 EXPORT  GPIOE_Handler [WEAK]
-                B       .
+                IMPORT  GPIOPortE_Handler
+                LDR     R0, =GPIOPortE_Handler
+                BX      R0
                 ENDP
 
 UART0_Handler\

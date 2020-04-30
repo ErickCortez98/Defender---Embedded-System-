@@ -71,6 +71,7 @@ SlidePot my(1500,0);
 extern "C" void DisableInterrupts(void);
 extern "C" void EnableInterrupts(void);
 extern "C" void SysTick_Handler(void);
+extern "C" void GPIOPortE_Handler(void);
 //extern "C" PlayerShip Player;
 //extern "C" Bullet bullet;
 

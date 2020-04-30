@@ -119,6 +119,46 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
+          <Key>DAC_OUTPUT_SEL</Key>
+          <Name>3</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>DAC_INPUT_SEL</Key>
+          <Name>3</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>DAC_R5</Key>
+          <Name>0</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>DAC_R4</Key>
+          <Name>0</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>DAC_R3</Key>
+          <Name>0</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>DAC_R2</Key>
+          <Name>0</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>DAC_R1</Key>
+          <Name>0</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>DAC_R0</Key>
+          <Name>0</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
           <Key>DLGUARM</Key>
         </SetRegEntry>
         <SetRegEntry>
@@ -164,7 +204,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGDARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=-1,-1,-1,-1,0)(1012=-1,-1,-1,-1,0)(9108=1284,321,1459,553,1)(9106=-1,-1,-1,-1,0)(9104=-1,-1,-1,-1,0)(9107=678,346,1131,617,1)(9109=-1,-1,-1,-1,0)(9102=884,446,1280,720,0)</Name>
+          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=-1,-1,-1,-1,0)(1012=-1,-1,-1,-1,0)(9108=1284,321,1459,553,1)(9106=-1,-1,-1,-1,0)(9104=180,121,586,402,0)(9107=678,346,1131,617,1)(9109=-1,-1,-1,-1,0)(9102=884,446,1280,720,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -176,9 +216,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>93</LineNumber>
+          <LineNumber>92</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>1108</Address>
+          <Address>1098</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -187,138 +227,42 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\main.cpp</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\Lab10_C__\main.cpp\93</Expression>
+          <Expression>\\Lab10_C__\main.cpp\92</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>123</LineNumber>
+          <LineNumber>12</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>1232</Address>
+          <Address>0</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\main.cpp</Filename>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\PlayerShip.cpp</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\Lab10_C__\main.cpp\123</Expression>
+          <Expression></Expression>
         </Bp>
         <Bp>
           <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>371</LineNumber>
+          <LineNumber>12</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>836</Address>
+          <Address>0</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\startup_TM4C123.s</Filename>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>PlayerShip.h</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\Lab10_C__\startup_TM4C123.s\371</Expression>
+          <Expression></Expression>
         </Bp>
         <Bp>
           <Number>3</Number>
-          <Type>0</Type>
-          <LineNumber>13</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\Bullet.h</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>4</Number>
-          <Type>0</Type>
-          <LineNumber>13</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>Buttons.h</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>5</Number>
-          <Type>0</Type>
-          <LineNumber>13</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\DAC.cpp</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>6</Number>
-          <Type>0</Type>
-          <LineNumber>13</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\FIFO.cpp</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>7</Number>
-          <Type>0</Type>
-          <LineNumber>13</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>Images.h</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>8</Number>
-          <Type>0</Type>
-          <LineNumber>13</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\PLL.cpp</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>9</Number>
           <Type>0</Type>
           <LineNumber>13</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -334,9 +278,9 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>10</Number>
+          <Number>4</Number>
           <Type>0</Type>
-          <LineNumber>13</LineNumber>
+          <LineNumber>12</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -345,12 +289,12 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\ST7735.cpp</Filename>
+          <Filename>.\SlidePot.cpp</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>11</Number>
+          <Number>5</Number>
           <Type>0</Type>
           <LineNumber>13</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -366,7 +310,23 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>12</Number>
+          <Number>6</Number>
+          <Type>0</Type>
+          <LineNumber>12</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>Sprite.h</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>7</Number>
           <Type>0</Type>
           <LineNumber>13</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -377,14 +337,14 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\Timer0.cpp</Filename>
+          <Filename>Sprite.h</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>13</Number>
+          <Number>8</Number>
           <Type>0</Type>
-          <LineNumber>13</LineNumber>
+          <LineNumber>12</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -393,28 +353,12 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\Timer1.cpp</Filename>
+          <Filename>.\main.cpp</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>14</Number>
-          <Type>0</Type>
-          <LineNumber>13</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\UART.cpp</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>15</Number>
+          <Number>9</Number>
           <Type>0</Type>
           <LineNumber>13</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -430,9 +374,9 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>16</Number>
+          <Number>10</Number>
           <Type>0</Type>
-          <LineNumber>13</LineNumber>
+          <LineNumber>12</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -441,14 +385,14 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\random.cpp</Filename>
+          <Filename>.\startup_TM4C123.s</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>17</Number>
+          <Number>11</Number>
           <Type>0</Type>
-          <LineNumber>367</LineNumber>
+          <LineNumber>13</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
