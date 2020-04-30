@@ -6,7 +6,7 @@
 #include "ST7735.h"
 
 void Sprite::Draw(){
-  ST7735_DrawBitmap(x, y, image, w, h);
+  ST7735_DrawBitmap(y, x, image, w, h);
 }
 
 uint16_t Sprite::Getx(){
