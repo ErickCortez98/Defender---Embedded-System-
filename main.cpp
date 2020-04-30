@@ -89,17 +89,17 @@ void clock(void){
 
 void GPIOPortE_Handler(void){
 	//polling for FireButton
-	if(GPIO_PORTE_RIS_R&0x1){		
+	if(FireButton()){		
 		GPIO_PORTE_ICR_R = 0x1; //Acknowledge flag 0
 		bullet.fireBullet(Player);
 	}
 	//polling for HyperButton
-	if(GPIO_PORTE_RIS_R&0x2){		
+	if(HyperButton()){		
 		GPIO_PORTE_ICR_R = 0x2; //Acknowledge flag 1
 		//Do stuff for hyperButton
 	}
 	//polling for DirButton
-	if(GPIO_PORTE_RIS_R&0x4){
+	if(DirButton()){
 		GPIO_PORTE_ICR_R = 0x4; //Acknowledge flag 2
 		//Do stuff for dirButton
 	}

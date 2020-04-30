@@ -32,14 +32,14 @@ void Buttons_Init(void){volatile int delay;
 }
 
 bool FireButton(void){
-  return 0x01 & GPIO_PORTE_DATA_R; // return input from keys
+  return GPIO_PORTE_RIS_R&0x1; // return input from keys
 }
 
 bool HyperButton(void){
-  return (0x02 & GPIO_PORTE_DATA_R) >> 1; // return input from keys
+  return GPIO_PORTE_RIS_R&0x2; // return input from keys
 }
 
 bool DirButton(void){
-  return (0x04 & GPIO_PORTE_DATA_R) >> 2; // return input from keys
+  return GPIO_PORTE_RIS_R&0x4; // return input from keys
 }
 
