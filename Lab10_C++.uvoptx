@@ -268,7 +268,7 @@
       <GroupNumber>1</GroupNumber>
       <FileNumber>2</FileNumber>
       <FileType>8</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.cpp</PathWithFileName>
@@ -280,7 +280,7 @@
       <GroupNumber>1</GroupNumber>
       <FileNumber>3</FileNumber>
       <FileType>8</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>.\DAC.cpp</PathWithFileName>
@@ -328,7 +328,7 @@
       <GroupNumber>1</GroupNumber>
       <FileNumber>7</FileNumber>
       <FileType>8</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>.\SlidePot.cpp</PathWithFileName>
@@ -376,7 +376,7 @@
       <GroupNumber>1</GroupNumber>
       <FileNumber>11</FileNumber>
       <FileType>8</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>.\UART.cpp</PathWithFileName>
@@ -412,11 +412,47 @@
       <GroupNumber>1</GroupNumber>
       <FileNumber>14</FileNumber>
       <FileType>8</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Sprite.cpp</PathWithFileName>
       <FilenameWithoutPath>Sprite.cpp</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>15</FileNumber>
+      <FileType>8</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\Bullet.cpp</PathWithFileName>
+      <FilenameWithoutPath>Bullet.cpp</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>16</FileNumber>
+      <FileType>5</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\Bullet.h</PathWithFileName>
+      <FilenameWithoutPath>Bullet.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>17</FileNumber>
+      <FileType>8</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\Buttons.cpp</PathWithFileName>
+      <FilenameWithoutPath>Buttons.cpp</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

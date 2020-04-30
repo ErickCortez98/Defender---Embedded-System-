@@ -49,6 +49,7 @@
 // VCC (pin 2) connected to +3.3 V
 // Gnd (pin 1) connected to ground
 
+ 
 #include <stdint.h>
 #include "C:\Keil_v5\EE319KwareSpring2020\inc\TM4C123gh6pm.h"
 #include "PLL.h"
@@ -61,7 +62,8 @@
 #include "Timer0.h"
 #include "Timer1.h"
 #include "PlayerShip.h"
-#include "Buttons.h" 
+#include "Buttons.h"
+#include "Bullet.h"
 
 
 SlidePot my(1500,0);
@@ -72,6 +74,7 @@ extern "C" void SysTick_Handler(void);
 
 
 PlayerShip Player;
+Bullet bullet = Bullet(32, 80,  BulletImage, 8, 5);
 SlidePot Joystick(158,16);
 
 
@@ -87,6 +90,19 @@ void background(void){
   //x needs to be changed based on button input, 32 is placeholder==================
   Player.UpdatePos(32, Joystick.ADCsample());
   Player.Draw();
+	
+	//TODO: Change 100 for another number, actual width of the scren
+	/*for(int i = Player.sprite.Getx(); i < 200; i++){
+		bullet.UpdatePos(i+20, Player.sprite.Gety()-2);
+		bullet.Draw();
+		//delay - might not be the appropiate way to do this
+		for(int i = 0; i < 1000; i++){
+		}
+	}*/
+	
+	if(FireButton()){
+		bullet.fireBullet(Player);
+	}
 }
 
 void wait(uint32_t sec){
@@ -98,7 +114,7 @@ int main(void){
   PLL_Init(Bus80MHz);       // Bus clock is 80 MHz 
   ADC_Init();
   Random_Init(1);
-  Buttons_Init();
+	Buttons_Init();
   Output_Init();
   Timer1_Init(&clock,80000000); // 1 Hz
   EnableInterrupts();

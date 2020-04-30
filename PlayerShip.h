@@ -9,8 +9,9 @@
 
 
 class PlayerShip{ private:
-  Sprite sprite;
+  
 public:
+	Sprite sprite; // I changed this to public to be able to find the position of the ship
   PlayerShip();
   void Draw();
   void UpdatePos(uint16_t x, uint16_t y);

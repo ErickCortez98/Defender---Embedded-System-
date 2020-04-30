@@ -13,3 +13,5 @@
 .\main.o: PlayerShip.h
 .\main.o: Sprite.h
 .\main.o: Buttons.h
+.\main.o: Bullet.h
+.\main.o: PlayerShip.h
