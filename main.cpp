@@ -71,38 +71,44 @@ SlidePot my(1500,0);
 extern "C" void DisableInterrupts(void);
 extern "C" void EnableInterrupts(void);
 extern "C" void SysTick_Handler(void);
-
+//extern "C" PlayerShip Player;
+//extern "C" Bullet bullet;
 
 PlayerShip Player;
-Bullet bullet = Bullet(32, 80,  BulletImage, 8, 5);
+Bullet bullet;
 SlidePot Joystick(158,16);
 
 
 uint32_t time = 0;
 
+
 void clock(void){
   time++;
 }
 
+void GPIOPortE_Handler(void){
+	//polling for FireButton
+	if(GPIO_PORTE_RIS_R&0x1){		
+		GPIO_PORTE_ICR_R = 0x1; //Acknowledge flag 0
+		bullet.fireBullet(Player);
+	}
+	//polling for HyperButton
+	if(GPIO_PORTE_RIS_R&0x2){		
+		GPIO_PORTE_ICR_R = 0x2; //Acknowledge flag 1
+		//Do stuff for hyperButton
+	}
+	//polling for DirButton
+	if(GPIO_PORTE_RIS_R&0x4){
+		GPIO_PORTE_ICR_R = 0x4; //Acknowledge flag 2
+		//Do stuff for dirButton
+	}
+}
+
 void background(void){
   Joystick.Save(ADC_In());
-  
   //x needs to be changed based on button input, 32 is placeholder==================
   Player.UpdatePos(32, Joystick.ADCsample());
   Player.Draw();
-	
-	//TODO: Change 100 for another number, actual width of the scren
-	/*for(int i = Player.sprite.Getx(); i < 200; i++){
-		bullet.UpdatePos(i+20, Player.sprite.Gety()-2);
-		bullet.Draw();
-		//delay - might not be the appropiate way to do this
-		for(int i = 0; i < 1000; i++){
-		}
-	}*/
-	
-	if(FireButton()){
-		bullet.fireBullet(Player);
-	}
 }
 
 void wait(uint32_t sec){
@@ -115,9 +121,10 @@ int main(void){
   ADC_Init();
   Random_Init(1);
 	Buttons_Init();
+	EnableInterrupts();
   Output_Init();
   Timer1_Init(&clock,80000000); // 1 Hz
-  EnableInterrupts();
+  
   
   
 

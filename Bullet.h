@@ -11,8 +11,7 @@ class Bullet{
   Sprite bulletSprite;
 
 public:
-  Bullet(uint16_t x, uint16_t y, const unsigned short *image, uint16_t w, uint16_t h): bulletSprite(x, y, image, w, h) {};
-
+	Bullet();
   void Draw();
   void UpdatePos(uint16_t x, uint16_t y);
 	void fireBullet(PlayerShip Player);

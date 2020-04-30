@@ -4,6 +4,11 @@
 
 #include "Bullet.h" 
 #include <stdint.h>
+#include "Images.h"
+
+Bullet::Bullet(){
+	 bulletSprite = Sprite(32, 80,  BulletImage, 8, 5);
+};
 
 //helper function to get the even x position used in fireBullet function
 int8_t makeCloseEven(int8_t x_position){
