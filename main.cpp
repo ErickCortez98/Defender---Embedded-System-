@@ -61,6 +61,7 @@
 #include "Timer0.h"
 #include "Timer1.h"
 #include "PlayerShip.h"
+#include "Buttons.h" 
 
 
 SlidePot my(1500,0);
@@ -70,7 +71,7 @@ extern "C" void EnableInterrupts(void);
 extern "C" void SysTick_Handler(void);
 
 
-PlayerShip Player = PlayerShip(32, 80, PlayerShipIm, 21, 10);
+PlayerShip Player;
 SlidePot Joystick(158,16);
 
 
@@ -97,6 +98,7 @@ int main(void){
   PLL_Init(Bus80MHz);       // Bus clock is 80 MHz 
   ADC_Init();
   Random_Init(1);
+  Buttons_Init();
   Output_Init();
   Timer1_Init(&clock,80000000); // 1 Hz
   EnableInterrupts();

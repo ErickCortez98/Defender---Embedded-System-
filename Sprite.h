@@ -15,6 +15,7 @@ class Sprite{ private:
   uint16_t w;
   uint16_t h;
 public:
+  Sprite(){}
   Sprite(uint16_t init_x, uint16_t init_y, const unsigned short* init_im, uint16_t init_w, uint16_t init_h): x(init_x), y(init_y), image(init_im), w(init_w), h(init_h) {}
   void Draw();
   uint16_t Getx();

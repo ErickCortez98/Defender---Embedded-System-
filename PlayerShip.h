@@ -11,7 +11,7 @@
 class PlayerShip{ private:
   Sprite sprite;
 public:
-  PlayerShip(uint16_t x, uint16_t y, const unsigned short* im, uint16_t w, uint16_t h): sprite(x, y, im, w, h) {}
+  PlayerShip();
   void Draw();
   void UpdatePos(uint16_t x, uint16_t y);
 };

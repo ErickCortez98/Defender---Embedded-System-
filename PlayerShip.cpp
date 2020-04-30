@@ -3,6 +3,12 @@
 //Date created: 4/28/2020
 
 #include "PlayerShip.h" 
+#include "Images.h" 
+
+PlayerShip::PlayerShip(){
+  //initial x and y position, followed by sprite image information
+  sprite = Sprite(32, 80, PlayerShipIm, 21, 10);
+}
 
 void PlayerShip::Draw(){
   sprite.Draw();
