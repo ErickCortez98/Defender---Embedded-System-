@@ -842,24 +842,24 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       184          4         80          0          0       2548   bullet.o
-       252         22          0          0          0        900   buttons.o
+       184          4         80          0          0       2600   bullet.o
+       252         22          0          0          0        912   buttons.o
          0          0          0          0          0       1232   dac.o
-        28          0          0          0          0       1220   fifo.o
-       268         32          4          4         64       8400   main.o
-       128          6        420          0          0       4172   playership.o
-       124          4          0          0          0        455   pll.o
-        64         12          0          4          0        870   random.o
-       364         26          0          0          0       3438   slidepot.o
-        48          0          0          0          0       1684   sprite.o
-      4272        234       2114         44         12      16476   st7735.o
-       304         28        620          0       2048       5608   startup_tm4c123.o
-       112         22          0          4          0       1222   timer0.o
-       112         22          0          4          0       1222   timer1.o
-        92          4          4          0         40       2237   uart.o
+        28          0          0          0          0       1236   fifo.o
+       268         32          4          4         64       8492   main.o
+       128          6        420          0          0       4252   playership.o
+       124          4          0          0          0        467   pll.o
+        64         12          0          4          0        894   random.o
+       364         26          0          0          0       3462   slidepot.o
+        48          0          0          0          0       1708   sprite.o
+      4272        234       2114         44         12      16520   st7735.o
+       304         28        620          0       2048       5624   startup_tm4c123.o
+       112         22          0          4          0       1262   timer0.o
+       112         22          0          4          0       1262   timer1.o
+        92          4          4          0         40       2277   uart.o
 
     ----------------------------------------------------------------------
-      6352        416       3276         60       2164      51684   Object Totals
+      6352        416       3276         60       2164      52200   Object Totals
          0          0         32          0          0          0   (incl. Generated)
          0          0          2          0          0          0   (incl. Padding)
 
@@ -909,8 +909,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      6672        442       3276         60       2260      50888   Grand Totals
-      6672        442       3276         60       2260      50888   ELF Image Totals
+      6672        442       3276         60       2260      51404   Grand Totals
+      6672        442       3276         60       2260      51404   ELF Image Totals
       6672        442       3276         60          0          0   ROM Totals
 
 ==============================================================================
