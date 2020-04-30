@@ -11,8 +11,10 @@
 uint8_t fireBulletFlag = 0;
 
 Bullet::Bullet(){
-	 bulletSprite = Sprite(32, 80,  BulletImage, 5, 11);
-};
+	bulletSprite = Sprite(32, 80,  BulletImage, 5, 11);
+  status = alive;
+}
+
 
 //helper function to get the even x position used in fireBullet function
 int8_t makeCloseEven(int8_t x_position){
@@ -24,25 +26,35 @@ int8_t makeCloseEven(int8_t x_position){
 	}
 }
 
+Bullet::Bullet(uint8_t x, uint8_t y){
+  x = makeCloseEven(x);
+	bulletSprite = Sprite(x+10, y+1,  BulletImage, 5, 11);
+  status = alive;
+}
+
+
 void Bullet::Draw(){
 	bulletSprite.Draw();
+  UpdatePos(Getx() + 2, Gety());
+  if(Getx() > SCREENWIDTH+10 || Getx() == 0){//MIGHT HAVE PROBLEMS WHEN BULLET EXITS LEFT OF SCREEN
+    status = dead;
+  }
 }
 
 void Bullet::UpdatePos(uint16_t x, uint16_t y){
 	bulletSprite.UpdatePos(x, y);
 }
 
-void Bullet::fireBullet(PlayerShip Player){
-	uint8_t x_position = Player.sprite.Getx();
-	x_position = makeCloseEven(x_position);	//getting only even x positions as recommended in the lab descriptor 
-	
-	while(x_position < SCREENWIDTH+5){
-		this->UpdatePos(x_position+5, Player.sprite.Gety()+1);
-		this->Draw();
-		x_position += 2;
-		//delay
-		for(int i = 0; i < 10000; i++){
-		}
-	}
+
+uint8_t Bullet::Getx(){
+  return bulletSprite.Getx();
+}
+  
+uint8_t Bullet::Gety(){
+  return bulletSprite.Gety();
+}
+
+status_t Bullet::GetStatus(){
+  return status;
 }
 

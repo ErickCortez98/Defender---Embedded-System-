@@ -458,11 +458,6 @@
               <FilePath>.\Bullet.cpp</FilePath>
             </File>
             <File>
-              <FileName>Bullet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Bullet.h</FilePath>
-            </File>
-            <File>
               <FileName>Buttons.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\Buttons.cpp</FilePath>

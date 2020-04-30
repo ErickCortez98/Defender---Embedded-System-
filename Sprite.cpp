@@ -9,15 +9,15 @@ void Sprite::Draw(){
   ST7735_DrawBitmap(y, x, image, w, h);
 }
 
-uint16_t Sprite::Getx(){
+uint8_t Sprite::Getx(){
   return x;
 }
   
-uint16_t Sprite::Gety(){
+uint8_t Sprite::Gety(){
   return y;
 }
   
-void Sprite::UpdatePos(uint16_t new_x, uint16_t new_y){
+void Sprite::UpdatePos(uint8_t new_x, uint8_t new_y){
   x = new_x;
   y = new_y;
 }

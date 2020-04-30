@@ -69,6 +69,8 @@ void SlidePot::Save(uint32_t n){
   data = n;
 // 2) calculate distance from ADC, save into private variable
   distance = Convert(data);
+//Convert raw data for player input
+  ship_y_val = 16 + (n >> 6);
 // 3) set semaphore flag = 1
   flag = 1;
 }
@@ -98,6 +100,10 @@ uint32_t SlidePot::Distance(void){  // return distance value (0 to 2000), 0.001c
   //*** students write this ******
   // return last calculated distance in 0.001cm
   return distance;
+}
+
+uint8_t SlidePot::GetY_Val(void){
+  return ship_y_val;
 }
 
 

@@ -15,9 +15,9 @@ void PlayerShip::Draw(){
 }
 
 //y value is raw ADC value and must be converted
-void PlayerShip::UpdatePos(uint16_t x, uint16_t y){
-  uint16_t old_y = sprite.Gety();
-  uint16_t new_y = 16 + (y >> 6);
+void PlayerShip::UpdatePos(uint8_t x, uint8_t y){
+  uint8_t old_y = sprite.Gety();
+  uint8_t new_y = y;
   
   if((new_y - old_y) > 2){
     new_y = old_y + 2;
@@ -28,5 +28,14 @@ void PlayerShip::UpdatePos(uint16_t x, uint16_t y){
   
   sprite.UpdatePos(x, new_y);
 }
+
+uint8_t PlayerShip::Getx(){
+  return sprite.Getx();
+}
+  
+uint8_t PlayerShip::Gety(){
+  return sprite.Gety();
+}
+
 
 

@@ -14,6 +14,7 @@ class SlidePot{ private:
   uint32_t data;     // raw ADC value
   int32_t flag;      // 0 if data is not valid, 1 if valid
   uint32_t distance; // distance in 0.001cm
+  uint8_t ship_y_val;
 
 // distance = (slope*data+offset)/4096
   uint32_t slope;    // calibration coeffients
@@ -25,6 +26,7 @@ public:
   uint32_t Convert(uint32_t n); // convert ADC to raw sample
   uint32_t ADCsample(void);     // return ADC sample value (0 to 4095)
   uint32_t Distance(void);      // return distance value (0 to 2000), 0.001cm
+  uint8_t GetY_Val(void);
 };
 
 // ADC initialization function, channel 5, PD2

@@ -9,18 +9,18 @@
 
 //Sprite class to be used for any class that needs something drawn
 class Sprite{ private:
-  uint16_t x;      // x coordinate
-  uint16_t y;      // y coordinate
+  uint8_t x;      // x coordinate
+  uint8_t y;      // y coordinate
   const unsigned short *image; // ptr->image
-  uint16_t w;
-  uint16_t h;
+  uint8_t w;
+  uint8_t h;
 public:
   Sprite(){}
-  Sprite(uint16_t init_x, uint16_t init_y, const unsigned short* init_im, uint16_t init_w, uint16_t init_h): x(init_x), y(init_y), image(init_im), w(init_w), h(init_h) {}
+  Sprite(uint8_t init_x, uint8_t init_y, const unsigned short* init_im, uint8_t init_w, uint8_t init_h): x(init_x), y(init_y), image(init_im), w(init_w), h(init_h) {}
   void Draw();
-  uint16_t Getx();
-  uint16_t Gety();
-  void UpdatePos(uint16_t new_x, uint16_t new_y);
+  uint8_t Getx();
+  uint8_t Gety();
+  void UpdatePos(uint8_t new_x, uint8_t new_y);
 };
 
 

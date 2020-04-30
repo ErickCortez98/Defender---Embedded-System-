@@ -64,19 +64,21 @@
 #include "PlayerShip.h"
 #include "Buttons.h"
 #include "Bullet.h"
+#include "List.h"
 
 
-SlidePot my(1500,0);
 
 extern "C" void DisableInterrupts(void);
 extern "C" void EnableInterrupts(void);
 extern "C" void SysTick_Handler(void);
 extern "C" void GPIOPortE_Handler(void);
-//extern "C" PlayerShip Player;
-//extern "C" Bullet bullet;
+
+#define NULL 0
+
+
+List<Bullet> BulletList;
 
 PlayerShip Player;
-Bullet bullet;
 SlidePot Joystick(158,16);
 
 uint32_t time = 0;
@@ -90,8 +92,8 @@ void GPIOPortE_Handler(void){
 	//polling for FireButton
 	if(FireButton()){		
 		GPIO_PORTE_ICR_R = 0x1; //Acknowledge flag 0
-		//Bullet bullet; //we create a new instance of bullet because each bullet is independent 
-		bullet.fireBullet(Player); //we fire the bullet
+    Bullet* bullet = new Bullet(Player.Getx(), Player.Gety());
+		BulletList.push_front(bullet);
 	}
 	//polling for HyperButton
 	if(HyperButton()){		
@@ -105,10 +107,24 @@ void GPIOPortE_Handler(void){
 	}
 }
 
+void DrawBullets(){
+  Node<Bullet>* current = BulletList.head;
+  while(current != NULL){
+    current->data->Draw();
+    if(current->data->GetStatus() == dead){
+      current = BulletList.remove(current);
+    }else{
+      current = current->next;
+    }
+  }
+}
+
 void background(void){
   Joystick.Save(ADC_In());
+  
+  DrawBullets();
   //x needs to be changed based on button input, 32 is placeholder==================
-  Player.UpdatePos(32, Joystick.ADCsample());
+  Player.UpdatePos(32, Joystick.GetY_Val());
   Player.Draw();
 
 }
