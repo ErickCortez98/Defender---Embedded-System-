@@ -6,7 +6,6 @@
 #include <stdint.h>
 #include "C:\Keil_v5\EE319KwareSpring2020\inc\TM4C123gh6pm.h"
 
-//extern "C" void Buttons_Init(void);
 
 //PE3 NOT CURRENTLY USED=======================
 //PE0 = Fire
@@ -17,6 +16,7 @@ void Buttons_Init(void){volatile int delay;
   delay = 0;
   GPIO_PORTE_DIR_R &= ~0xF;    // input PE3-0
   GPIO_PORTE_DEN_R |= 0x0F;     // enable digital on PE3-0
+	GPIO_PORTE_PDR_R |= 0x0F;			//enable pull down resistors on PE3-0 (that way we don't need externa resistors)
 }
 
 bool FireButton(void){
