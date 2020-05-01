@@ -10,7 +10,7 @@ PlayerShip::PlayerShip(){
   sprite = Sprite(32, 80, PlayerShipIm, 10, 21);
 	
 	//TO TEST DIFFERENT SPRITES
-	//sprite = Sprite(32, 95, HyperSpeed_Ship, 10, 28); //- HYPERSPEED SHIP SPRITE
+	//sprite = Sprite(32, 80, HyperSpeed_Ship, 10, 28); //- HYPERSPEED SHIP SPRITE
 	//sprite = Sprite(32, 80, Enemy_1, 12, 13); //- Enemy 1
 	//sprite = Sprite(32, 80, Enemy_2, 8, 15); //- Enemy 2
 }
