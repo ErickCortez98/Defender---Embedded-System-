@@ -65,6 +65,7 @@
 #include "Buttons.h"
 #include "Bullet.h"
 #include "List.h"
+#include "Terrain.h"
 
 
 
@@ -72,6 +73,9 @@ extern "C" void DisableInterrupts(void);
 extern "C" void EnableInterrupts(void);
 extern "C" void SysTick_Handler(void);
 extern "C" void GPIOPortE_Handler(void);
+
+
+
 
 #define NULL 0
 
@@ -134,6 +138,7 @@ void toggle_Heartbeat(){
 void background(void){
   Joystick.Save(ADC_In());
   
+  DrawTerrain();
   DrawBullets();
   //x needs to be changed based on button input, 32 is placeholder==================
   Player.UpdatePos(32, Joystick.GetY_Val());
@@ -149,6 +154,7 @@ void wait(uint32_t sec){
 int main(void){
   PLL_Init(Bus80MHz);       // Bus clock is 80 MHz 
   ADC_Init();
+  TerrainIndex = 0;
   Random_Init(1);
 	Buttons_Init();
 	EnableInterrupts();

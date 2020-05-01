@@ -15,3 +15,4 @@
 .\main.o: Buttons.h
 .\main.o: Bullet.h
 .\main.o: List.h
+.\main.o: Terrain.h

@@ -4,8 +4,10 @@
 // Last modification date: 04/28/2020
 // Capture image dimensions from BMP files
 
+#include <stdint.h>
 #ifndef __images_h
 #define __images_h
+
 
 
 // *************************** Images ***************************
