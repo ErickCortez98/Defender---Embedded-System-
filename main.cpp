@@ -114,7 +114,12 @@ void GPIOPortE_Handler(void){
 	//polling for HyperButton
 	if(HyperButton()){		
 		GPIO_PORTE_ICR_R = 0x2; //Acknowledge flag 1
-    Player.hyper ^= 1;
+    uint8_t button_data = (GPIO_PORTE_DATA_R & 0x02) >> 1;
+    if(button_data){
+      Player.hyper = true;
+    }else{
+      Player.hyper = false;
+    }
 	}
 	//polling for DirButton
 	if(DirButton()){
