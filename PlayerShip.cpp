@@ -8,6 +8,7 @@
 PlayerShip::PlayerShip(){
   //initial x and y position, followed by sprite image information
   sprite = Sprite(32, 80, PlayerShipIm, 10, 21);
+  hyper = false;
 	
 	//TO TEST DIFFERENT SPRITES
 	//sprite = Sprite(32, 80, HyperSpeed_Ship, 10, 28); //- HYPERSPEED SHIP SPRITE

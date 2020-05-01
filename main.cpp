@@ -67,6 +67,7 @@
 #include "Bullet.h"
 #include "List.h"
 #include "Terrain.h"
+#include "HelperFns.h"
 
 extern "C" void DisableInterrupts(void);
 extern "C" void EnableInterrupts(void);
@@ -84,21 +85,14 @@ SlidePot Joystick(158,16);
 
 uint32_t time = 0;
 uint8_t randomInitFlag = 1;
+uint8_t Flag = 1;
 
 void clock(void){
   time++;
+  toggle_Heartbeat();
 }
 
-void LCD_OutDec1(uint32_t n){
-    char num;
-    if(n < 10){
-		 ST7735_OutChar('0' + n);
-        return;
-    }
-    num = ('0' + (n%10));
-    LCD_OutDec1(n/10);
-		ST7735_OutChar(num);
-} 
+
 
 void GPIOPortE_Handler(void){
 	//initializing random number class with seed as the current systick value when the user presses a button for the first time
@@ -120,7 +114,7 @@ void GPIOPortE_Handler(void){
 	//polling for HyperButton
 	if(HyperButton()){		
 		GPIO_PORTE_ICR_R = 0x2; //Acknowledge flag 1
-		//Do stuff for hyperButton
+    Player.hyper ^= 1;
 	}
 	//polling for DirButton
 	if(DirButton()){
@@ -141,27 +135,20 @@ void DrawBullets(){
   }
 }
 
-void Heartbeat_Init(){
-	//Set up for the LED heartbeat
-	SYSCTL_RCGCGPIO_R |= 0x20;
-		while((SYSCTL_RCGCGPIO_R & 0x20) == 0){};	//Waiting for clock to be ready
-	GPIO_PORTF_DIR_R |= 0x04;
-	GPIO_PORTF_DEN_R |= 0x04;
-}
 
-void toggle_Heartbeat(){
-  GPIO_PORTF_DATA_R ^= 0x04;
-}
 
 void background(void){
-  Joystick.Save(ADC_In());
+  Flag = 1;
   
-  DrawTerrain();
-  DrawBullets();
+  if(Player.hyper){
+    UpdateTerrainIndex(2);//Should be some velocity instead of 2================
+  }else{
+    UpdateTerrainIndex(0);
+  }
+  
+  Joystick.Save(ADC_In());
   //x needs to be changed based on button input, 32 is placeholder==================
   Player.UpdatePos(32, Joystick.GetY_Val());
-  Player.Draw();
-	toggle_Heartbeat();
 }
 
 void wait(uint32_t sec){
@@ -172,7 +159,6 @@ void wait(uint32_t sec){
 int main(void){
   PLL_Init(Bus80MHz);       // Bus clock is 80 MHz 
   ADC_Init();
-  TerrainIndex = 0;
   Random_Init(1);
 	Buttons_Init();
 	EnableInterrupts();
@@ -196,7 +182,11 @@ int main(void){
   Timer0_Init(&background,1600000); // 50 Hz
   
   while(1){
-    
+    while(Flag == 0){}
+    Flag = 0;
+    DrawTerrain();
+    DrawBullets();
+    Player.Draw();
   }
 
 }

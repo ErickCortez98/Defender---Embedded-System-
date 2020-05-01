@@ -10,7 +10,10 @@
 
 class PlayerShip{ private:
   Sprite sprite;
+  
 public:
+  bool hyper;
+
   PlayerShip();
   void Draw();
   void UpdatePos(uint8_t x, uint8_t y);

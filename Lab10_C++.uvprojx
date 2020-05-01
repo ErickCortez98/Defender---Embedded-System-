@@ -393,11 +393,6 @@
               <FilePath>.\main.cpp</FilePath>
             </File>
             <File>
-              <FileName>Print.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\Print.s</FilePath>
-            </File>
-            <File>
               <FileName>DAC.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\DAC.cpp</FilePath>

@@ -22,8 +22,9 @@ void Buttons_Init(void){volatile int delay;
 	GPIO_PORTE_PDR_R |= 0x0F;			//enable pull down resistors on PE3-0 (that way we don't need externa resistors)
 	
 	GPIO_PORTE_IS_R &= ~0xF; //PE3-0 are edge sensitive
-	GPIO_PORTE_IBE_R &= ~0xF; //PE3-0 are not both edges
-	GPIO_PORTE_IEV_R |= 0xF;	//PE3-0 rising edge event
+	GPIO_PORTE_IBE_R &= ~0xD; //PE3,PE2,PE0 are not both edges
+  GPIO_PORTE_IBE_R |= 0x2; //PE1 is both edges
+	GPIO_PORTE_IEV_R |= 0xD;	//PE3,PE2,PE0 rising edge event
 	GPIO_PORTE_ICR_R = 0xF; //Clear flag of PE3-0
 	GPIO_PORTE_IM_R |= 0xF; //enable interrupts on PE3-0
 	NVIC_PRI1_R = (NVIC_PRI1_R&0xFFFFFF00) | 0x00000040; //Priority 2
