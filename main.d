@@ -2,6 +2,7 @@
 .\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\main.o: C:\Keil_v5\EE319KwareSpring2020\inc\TM4C123gh6pm.h
 .\main.o: PLL.h
+.\main.o: Print.h
 .\main.o: ST7735.h
 .\main.o: Random.h
 .\main.o: PLL.h

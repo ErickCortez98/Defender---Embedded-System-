@@ -53,6 +53,7 @@
 #include <stdint.h>
 #include "C:\Keil_v5\EE319KwareSpring2020\inc\TM4C123gh6pm.h"
 #include "PLL.h"
+#include "Print.h"
 #include "ST7735.h"
 #include "Random.h"
 #include "PLL.h"
@@ -67,14 +68,10 @@
 #include "List.h"
 #include "Terrain.h"
 
-
-
 extern "C" void DisableInterrupts(void);
 extern "C" void EnableInterrupts(void);
 extern "C" void SysTick_Handler(void);
 extern "C" void GPIOPortE_Handler(void);
-
-
 
 
 #define NULL 0
@@ -86,18 +83,39 @@ PlayerShip Player;
 SlidePot Joystick(158,16);
 
 uint32_t time = 0;
-
+uint8_t randomInitFlag = 1;
 
 void clock(void){
   time++;
 }
 
+void LCD_OutDec1(uint32_t n){
+    char num;
+    if(n < 10){
+		 ST7735_OutChar('0' + n);
+        return;
+    }
+    num = ('0' + (n%10));
+    LCD_OutDec1(n/10);
+		ST7735_OutChar(num);
+} 
+
 void GPIOPortE_Handler(void){
+	//initializing random number class with seed as the current systick value when the user presses a button for the first time
+	if(randomInitFlag){
+		Random_Init(NVIC_ST_CURRENT_R);
+		randomInitFlag = 0;
+	}
+	
 	//polling for FireButton
 	if(FireButton()){		
 		GPIO_PORTE_ICR_R = 0x1; //Acknowledge flag 0
     Bullet* bullet = new Bullet(Player.Getx(), Player.Gety());
 		BulletList.push_front(bullet);
+		
+		//checking random number generator
+		//ST7735_SetCursor(0,200);
+		//LCD_OutDec1(Random());
 	}
 	//polling for HyperButton
 	if(HyperButton()){		
