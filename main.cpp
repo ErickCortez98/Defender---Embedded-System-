@@ -119,6 +119,18 @@ void DrawBullets(){
   }
 }
 
+void Heartbeat_Init(){
+	//Set up for the LED heartbeat
+	SYSCTL_RCGCGPIO_R |= 0x20;
+		while((SYSCTL_RCGCGPIO_R & 0x20) == 0){};	//Waiting for clock to be ready
+	GPIO_PORTF_DIR_R |= 0x04;
+	GPIO_PORTF_DEN_R |= 0x04;
+}
+
+void toggle_Heartbeat(){
+  GPIO_PORTF_DATA_R ^= 0x04;
+}
+
 void background(void){
   Joystick.Save(ADC_In());
   
@@ -126,7 +138,7 @@ void background(void){
   //x needs to be changed based on button input, 32 is placeholder==================
   Player.UpdatePos(32, Joystick.GetY_Val());
   Player.Draw();
-
+	toggle_Heartbeat();
 }
 
 void wait(uint32_t sec){
@@ -141,6 +153,7 @@ int main(void){
 	Buttons_Init();
 	EnableInterrupts();
   Output_Init();
+	Heartbeat_Init();
   Timer1_Init(&clock,80000000); // 1 Hz
   
   
