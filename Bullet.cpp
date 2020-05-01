@@ -11,7 +11,7 @@
 uint8_t fireBulletFlag = 0;
 
 Bullet::Bullet(){
-	bulletSprite = Sprite(32, 80,  BulletImage, 5, 11);
+	bulletSprite = Sprite(32, 80,  BulletImage, 5, 25);
   status = alive;
 }
 
@@ -28,7 +28,7 @@ int8_t makeCloseEven(int8_t x_position){
 
 Bullet::Bullet(uint8_t x, uint8_t y){
   x = makeCloseEven(x);
-	bulletSprite = Sprite(x+10, y+1,  BulletImage, 5, 11);
+	bulletSprite = Sprite(x+10, y+1,  BulletImage, 5, 25);
   status = alive;
 }
 
@@ -36,7 +36,7 @@ Bullet::Bullet(uint8_t x, uint8_t y){
 void Bullet::Draw(){
 	bulletSprite.Draw();
   UpdatePos(Getx() + 2, Gety());
-  if(Getx() > SCREENWIDTH+10 || Getx() == 0){//MIGHT HAVE PROBLEMS WHEN BULLET EXITS LEFT OF SCREEN
+  if(Getx() > SCREENWIDTH+50 || Getx() == 0){//MIGHT HAVE PROBLEMS WHEN BULLET EXITS LEFT OF SCREEN
     status = dead;
   }
 }
