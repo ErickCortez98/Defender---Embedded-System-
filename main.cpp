@@ -95,18 +95,18 @@ void addEnemies(){
 	//if score < 100, we'll add 2 enemies
 	//NOTE: The +10 added to Random()%MAXREACHSHIP allows the ships to be a little bit above the very bottom of the screen (because the ship doesn't go that down)
 	if(score < 100){
-		for(int i = EnemyList.getLength(); i < 2; i++){ //adding only the enemies necessary to get to 2
+		for(int i = EnemyList.getLength(); i < 1; i++){ //adding only the enemies necessary to get to 2
 			Enemy *enemy = new Enemy(SCREENWIDTH-10, Random()%MAXREACHSHIP + 10, 1); //we create a new enemy in a random x location
 			EnemyList.push_front(enemy); //we add the enemy to the list
 		}
 	}else if(score >= 100 && score < 500){ //we'll add 3 enemies
-		for(int i = EnemyList.getLength(); i < 2; i++){ //adding only the enemies necessary to get to 3
+		for(int i = EnemyList.getLength(); i < Random()%3; i++){ //adding only the enemies necessary to get to 3
 			//TODO: Check this values for x and y are actually correct 
 			Enemy *enemy = new Enemy(SCREENWIDTH, Random()%MAXREACHSHIP + 10, 1); //we create a new enemy in a random x location
 			EnemyList.push_front(enemy); //we add the enemy to the list
 		}
 	}else if(score >= 500 && score < 1000){ //we'll add 5 enemies
-		for(int i = EnemyList.getLength(); i < 3; i++){ //adding only the enemies necessary to get to 5
+		for(int i = EnemyList.getLength(); i < Random()%5; i++){ //adding only the enemies necessary to get to 5
 			//TODO: Check this values for x and y are actually correct 
 			Enemy *enemy = new Enemy(SCREENWIDTH, Random()%MAXREACHSHIP + 10, Random()%2); //we create a new enemy in a random x location
 			EnemyList.push_front(enemy); //we add the enemy to the list
@@ -115,7 +115,7 @@ void addEnemies(){
 			if(EnemyList.getLength() == 8){ //if we have 8 enemies already being displayed we don't add more
 				return;
 			}
-			for(int i = EnemyList.getLength(); i < 4; i++){ //adding only the enemies necessary to get to 8
+			for(int i = EnemyList.getLength(); i < Random()%7; i++){ //adding only the enemies necessary to get to 8
 			//TODO: Check this values for x and y are actually correct 
 			Enemy *enemy = new Enemy(SCREENWIDTH, Random()%MAXREACHSHIP + 10, Random()%2); //we create a new enemy in a random x location
 			EnemyList.push_front(enemy); //we add the enemy to the list
@@ -127,8 +127,9 @@ void clock(void){
   time++;
 	timeEnemies++;
 	toggle_Heartbeat();
-	//every 5 seconds we add enemies depending on the current score of the user
-	if(timeEnemies == 5){
+	//every 3 seconds we add enemies depending on the current score of the user
+	//TODO: change the spawning rate, decreasing the seconds if scores increments more
+	if(timeEnemies == 3){
 		addEnemies();
 		timeEnemies = 0;
 	}

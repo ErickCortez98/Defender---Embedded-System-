@@ -54,3 +54,26 @@ timer1.crf
 timer1.o
 uart.crf
 uart.o
+*.Bak
+*.axf
+*.htm
+*.lnp
+*.map
+*.erick
+*.d
+*.iex
+*.scvd
+Lab10_C++_Target 1.dep
+Lab10_C++_sct.Bak
+Lab10_C++_Lab 10.dep
+Lab10_C++.uvprojx
+Lab10_C++.uvoptx
+Lab10_C++.uvguix.Fred8
+Lab10_C++.uvguix.erick
+Lab10_C++.uvguix
+Lab10_C++.sct
+Lab10_C++.map
+Lab10_C++.lnp
+Lab10_C++.htm
+Lab10_C++.build_log.htm
+Lab10_C++.axf

@@ -12,6 +12,8 @@ class Enemy{
 		uint8_t live; // enemies staring life: 50 points of life for enemy 1, 100 points of life for enemy 2
 		uint8_t x;
 		uint8_t y;
+		uint8_t updatePosition;
+		uint8_t velocity; //we have different velocity depending on the enemy
 	public:
 		Enemy(uint8_t x, uint8_t y, uint8_t typeEnemy);//constructor, we specify the type of our enemy with it's initial live
 		uint8_t getX();
