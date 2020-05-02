@@ -4,22 +4,25 @@
 
 #include "Sprite.h"
 #include <stdint.h>
+#include "PlayerShip.h"
+
 #ifndef BULLET_H
 #define BULLET_H
 
 class Bullet{ 
 	private:
   Sprite bulletSprite;
-  uint8_t x;
+  int16_t x;
   uint8_t y;
+  direction_t dir;
   status_t status;
 
 public:
 	Bullet();
-  Bullet(uint8_t x, uint8_t y);
+  Bullet(int16_t new_x, uint8_t new_y, direction_t new_dir);
   void Draw();
-  void UpdatePos(uint16_t x, uint16_t y);
-  uint8_t Getx();
+  void UpdatePos(int16_t x, uint16_t y);
+  int16_t Getx();
   uint8_t Gety();
   status_t GetStatus();
 

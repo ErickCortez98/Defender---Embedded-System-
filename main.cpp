@@ -147,7 +147,7 @@ void GPIOPortE_Handler(void){
 	//polling for FireButton
 	if(FireButton()){		
 		GPIO_PORTE_ICR_R = 0x1; //Acknowledge flag 0
-    Bullet* bullet = new Bullet(Player.Getx(), Player.Gety());
+    Bullet* bullet = new Bullet(Player.Getx(), Player.Gety(), Player.GetDir());
 		BulletList.push_front(bullet);
 		
 		//checking random number generator
@@ -194,15 +194,10 @@ void DrawEnemies(){
 void background(void){
   Flag = 1;
   
-  if(Player.GetHyper()){
-    UpdateTerrainIndex(2);//Should be some velocity instead of 2================
-  }else{
-    UpdateTerrainIndex(0);
-  }
+  UpdateTerrainIndex(Player.GetDir(), Player.GetHyper());
   
   Joystick.Save(ADC_In());
-  //x needs to be changed based on button input, 32 is placeholder==================
-  Player.UpdatePos(32, Joystick.GetY_Val());
+  Player.UpdatePos(Player.Getx(), Joystick.GetY_Val());
 }
 
 void wait(uint32_t sec){
