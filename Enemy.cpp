@@ -8,16 +8,16 @@
 
 #define MAXENEMIES 10
 
-Enemy::Enemy (uint8_t x, uint8_t y, uint8_t initalLive){
+Enemy::Enemy (uint8_t x, uint8_t y, uint8_t typeEnemy){
 		//if enemy's live is 50, then we now is enemy type 1, otherwise, it is 100, so the enmey is type 2
-		if(initalLive == 50){
+		if(typeEnemy == 1){
 			enemySprite = Sprite(x, y, Enemy_1, 12, 13);
 			this->status = 1;
-			this->live = 50;
+			this->live = 50; //max live of small enemy
 		}else{
 			enemySprite = Sprite(x, y, Enemy_2, 8, 15);
 			this->status = 1;
-			this->live = 100;
+			this->live = 100; //max live of big enemy
 		}
 }
 uint8_t Enemy::getX(){
