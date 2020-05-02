@@ -23,13 +23,13 @@ PlayerShip::PlayerShip(){
 void PlayerShip::Draw(){
   if(dir == right){
     if(hyper){
-      HRsprite.Draw(x, y);
+      HRsprite.Draw(x + 2, y);
     }else{
       Rsprite.Draw(x, y);
     }
   }else{
     if(hyper){
-      HLsprite.Draw(x, y);
+      HLsprite.Draw(x + 5, y);
     }else{
       Lsprite.Draw(x, y);
     }
