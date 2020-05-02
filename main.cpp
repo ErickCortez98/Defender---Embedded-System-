@@ -100,13 +100,13 @@ void addEnemies(){
 			EnemyList.push_front(enemy); //we add the enemy to the list
 		}
 	}else if(score >= 100 && score < 500){ //we'll add 3 enemies
-		for(int i = EnemyList.getLength(); i < 3; i++){ //adding only the enemies necessary to get to 3
+		for(int i = EnemyList.getLength(); i < 2; i++){ //adding only the enemies necessary to get to 3
 			//TODO: Check this values for x and y are actually correct 
 			Enemy *enemy = new Enemy(SCREENWIDTH, Random()%MAXREACHSHIP + 10, 1); //we create a new enemy in a random x location
 			EnemyList.push_front(enemy); //we add the enemy to the list
 		}
 	}else if(score >= 500 && score < 1000){ //we'll add 5 enemies
-		for(int i = EnemyList.getLength(); i < 5; i++){ //adding only the enemies necessary to get to 5
+		for(int i = EnemyList.getLength(); i < 3; i++){ //adding only the enemies necessary to get to 5
 			//TODO: Check this values for x and y are actually correct 
 			Enemy *enemy = new Enemy(SCREENWIDTH, Random()%MAXREACHSHIP + 10, Random()%2); //we create a new enemy in a random x location
 			EnemyList.push_front(enemy); //we add the enemy to the list
@@ -115,7 +115,7 @@ void addEnemies(){
 			if(EnemyList.getLength() == 8){ //if we have 8 enemies already being displayed we don't add more
 				return;
 			}
-			for(int i = EnemyList.getLength(); i < 8; i++){ //adding only the enemies necessary to get to 8
+			for(int i = EnemyList.getLength(); i < 4; i++){ //adding only the enemies necessary to get to 8
 			//TODO: Check this values for x and y are actually correct 
 			Enemy *enemy = new Enemy(SCREENWIDTH, Random()%MAXREACHSHIP + 10, Random()%2); //we create a new enemy in a random x location
 			EnemyList.push_front(enemy); //we add the enemy to the list
