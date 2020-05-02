@@ -2,6 +2,7 @@
 // Program written by: Jaxon Coward, Erick I. Cortez Valdez
 //Date created: 4/30/2020
 
+#include <stdint.h>
 
 #ifndef LIST_H
 #define LIST_H
@@ -18,12 +19,15 @@ class Node{
 
 template<class T>
 class List{ 
+private:
+	uint8_t length;
 public:
 
   Node<T>* head;
 
   List(){
     head = NULL;
+		length = 0;
   }
   
   ~List(){
@@ -33,6 +37,10 @@ public:
     }
   }
   
+	uint8_t getLength(){
+			return length;
+	}
+	
   void push_front(T *val){
     Node<T>* current = new Node<T>;
     current->data = val;
@@ -43,6 +51,7 @@ public:
       head->prev = current;
     }
     head = current;
+		length++;
   }
   
   Node<T>* remove(Node<T>* current){
@@ -60,6 +69,7 @@ public:
       next->prev = prev;
     }
     
+		length--;
     delete current->data;
     delete current;
     return next;

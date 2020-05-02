@@ -18,3 +18,4 @@
 .\main.o: List.h
 .\main.o: Terrain.h
 .\main.o: HelperFns.h
+.\main.o: Enemy.h

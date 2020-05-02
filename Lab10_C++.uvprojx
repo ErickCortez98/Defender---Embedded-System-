@@ -462,6 +462,16 @@
               <FileType>8</FileType>
               <FilePath>.\Buttons.cpp</FilePath>
             </File>
+            <File>
+              <FileName>Enemy.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\Enemy.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Enemy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Enemy.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
