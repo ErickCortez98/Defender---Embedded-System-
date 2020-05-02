@@ -22,7 +22,8 @@ class Enemy{
 		void setStatus(status_t newStatus);
 		uint8_t getLive();
 		void reduceLive(uint8_t liveReduction);
-		void Draw();
+		void Draw(uint8_t hyper);
 		void UpdatePos(uint16_t x, uint16_t y);
 		int8_t randomUpDownFn();
+	
 };
