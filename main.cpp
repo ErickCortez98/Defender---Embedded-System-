@@ -114,17 +114,12 @@ void GPIOPortE_Handler(void){
 	//polling for HyperButton
 	if(HyperButton()){		
 		GPIO_PORTE_ICR_R = 0x2; //Acknowledge flag 1
-    uint8_t button_data = (GPIO_PORTE_DATA_R & 0x02) >> 1;
-    if(button_data){
-      Player.hyper = true;
-    }else{
-      Player.hyper = false;
-    }
+    Player.ToggleHyper();
 	}
 	//polling for DirButton
 	if(DirButton()){
 		GPIO_PORTE_ICR_R = 0x4; //Acknowledge flag 2
-		//Do stuff for dirButton
+		Player.ToggleDirection();
 	}
 }
 
@@ -145,7 +140,7 @@ void DrawBullets(){
 void background(void){
   Flag = 1;
   
-  if(Player.hyper){
+  if(Player.GetHyper()){
     UpdateTerrainIndex(2);//Should be some velocity instead of 2================
   }else{
     UpdateTerrainIndex(0);

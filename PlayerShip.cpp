@@ -6,24 +6,36 @@
 #include "Images.h" 
 
 PlayerShip::PlayerShip(){
-  //initial x and y position, followed by sprite image information
-  sprite = Sprite(32, 80, PlayerShipIm, 10, 21);
+  Rsprite = Sprite(PlayerShipR, 10, 21);
+  Lsprite = Sprite(PlayerShipL, 10, 21);
+  HRsprite = Sprite(HyperShipR, 10, 28);
+  HLsprite = Sprite(HyperShipL, 10, 28);
+  x = 32;
+  y = 80;
   hyper = false;
-	
-	//TO TEST DIFFERENT SPRITES
-	//sprite = Sprite(32, 80, HyperSpeed_Ship, 10, 28); //- HYPERSPEED SHIP SPRITE
-	//sprite = Sprite(32, 80, Enemy_1, 12, 13); //- Enemy 1
-	//sprite = Sprite(32, 80, Enemy_2, 8, 15); //- Enemy 2
+  dir = right;
+
 }
 
 void PlayerShip::Draw(){
-  sprite.Draw();
+  if(dir == right){
+    if(hyper){
+      HRsprite.Draw(x, y);
+    }else{
+      Rsprite.Draw(x, y);
+    }
+  }else{
+    if(hyper){
+      HLsprite.Draw(x, y);
+    }else{
+      Lsprite.Draw(x, y);
+    }
+  }
 }
 
 //y value is raw ADC value and must be converted
-void PlayerShip::UpdatePos(uint8_t x, uint8_t y){
-  uint8_t old_y = sprite.Gety();
-  uint8_t new_y = y;
+void PlayerShip::UpdatePos(uint8_t new_x, uint8_t new_y){
+  uint8_t old_y = y;
   
   if((new_y - old_y) > 2){
     new_y = old_y + 2;
@@ -32,15 +44,43 @@ void PlayerShip::UpdatePos(uint8_t x, uint8_t y){
     new_y = old_y - 2;
   }
   
-  sprite.UpdatePos(x, new_y);
+  y = new_y;
+  x = new_x;
 }
 
 uint8_t PlayerShip::Getx(){
-  return sprite.Getx();
+  return x;
 }
   
 uint8_t PlayerShip::Gety(){
-  return sprite.Gety();
+  return y;
+}
+
+void PlayerShip::ToggleDirection(){
+  if(dir == right){
+    dir = left;
+  }else{
+    dir = right;
+  }
+}
+
+
+direction_t PlayerShip::GetDir(){
+  return dir;
+}
+
+void PlayerShip::ToggleHyper(){
+  uint8_t button_data = (GPIO_PORTE_DATA_R & 0x02) >> 1;
+  if(button_data){
+    hyper = true;
+  }else{
+    hyper = false;
+  }
+}
+
+
+bool PlayerShip::GetHyper(){
+  return hyper;
 }
 
 

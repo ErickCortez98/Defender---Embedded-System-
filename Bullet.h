@@ -12,6 +12,8 @@ typedef enum {dead,alive} status_t;
 class Bullet{ 
 	private:
   Sprite bulletSprite;
+  uint8_t x;
+  uint8_t y;
   status_t status;
 
 public:

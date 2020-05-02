@@ -11,7 +11,9 @@
 uint8_t fireBulletFlag = 0;
 
 Bullet::Bullet(){
-	bulletSprite = Sprite(32, 80,  BulletImage, 5, 25);
+	bulletSprite = Sprite(BulletImage, 5, 25);
+  x = 0;
+  y = 0;
   status = alive;
 }
 
@@ -26,32 +28,34 @@ int8_t makeCloseEven(int8_t x_position){
 	}
 }
 
-Bullet::Bullet(uint8_t x, uint8_t y){
-  x = makeCloseEven(x);
-	bulletSprite = Sprite(x+10, y+1,  BulletImage, 5, 25);
+Bullet::Bullet(uint8_t new_x, uint8_t new_y){
+  x = makeCloseEven(new_x) + 10;
+  y = new_y + 1;
+	bulletSprite = Sprite(BulletImage, 5, 25);
   status = alive;
 }
 
 
 void Bullet::Draw(){
-	bulletSprite.Draw();
-  UpdatePos(Getx() + 2, Gety());
-  if(Getx() > SCREENWIDTH+50 || Getx() == 0){//MIGHT HAVE PROBLEMS WHEN BULLET EXITS LEFT OF SCREEN
+	bulletSprite.Draw(x, y);
+  UpdatePos(x + 2, y);
+  if(x > SCREENWIDTH+50 || x == 0){//MIGHT HAVE PROBLEMS WHEN BULLET EXITS LEFT OF SCREEN
     status = dead;
   }
 }
 
-void Bullet::UpdatePos(uint16_t x, uint16_t y){
-	bulletSprite.UpdatePos(x, y);
+void Bullet::UpdatePos(uint16_t new_x, uint16_t new_y){
+	x = new_x;
+  y = new_y;
 }
 
 
 uint8_t Bullet::Getx(){
-  return bulletSprite.Getx();
+  return x;
 }
   
 uint8_t Bullet::Gety(){
-  return bulletSprite.Gety();
+  return y;
 }
 
 status_t Bullet::GetStatus(){
