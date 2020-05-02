@@ -5,6 +5,8 @@
 
 #include "Terrain.h"
 
+#define TERRAINSPEED 2
+
 void DrawTerrain(){
   for(int i = 0; i < SCREENWIDTH; i++){
     
@@ -23,11 +25,21 @@ void DrawTerrain(){
   }
 }
 
-void UpdateTerrainIndex(int16_t mod_index){
+void UpdateTerrainIndex(direction_t dir, bool hyper){
   LastTerrainIndex = TerrainIndex;
-  TerrainIndex += mod_index;//need to modify for overflow and underflow
-  if(TerrainIndex >= TERRAINSIZE){
-    TerrainIndex -= TERRAINSIZE;
+  
+  if(hyper){
+    if(dir == right){
+      TerrainIndex += TERRAINSPEED;
+    }else if(dir == left && TerrainIndex < TERRAINSPEED){
+      TerrainIndex = (TERRAINSIZE + TerrainIndex) - TERRAINSPEED;
+    }else{
+      TerrainIndex -= TERRAINSPEED;
+    }
+    
+    if(TerrainIndex >= TERRAINSIZE){
+      TerrainIndex -= TERRAINSIZE;
+    }
   }
 }
 

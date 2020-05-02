@@ -16,7 +16,7 @@ class PlayerShip{ private:
   Sprite Lsprite;
   Sprite HRsprite;
   Sprite HLsprite;
-  uint8_t x;
+  int16_t x;
   uint8_t y;
   direction_t dir;
   bool hyper;
@@ -25,8 +25,8 @@ public:
 
   PlayerShip();
   void Draw();
-  void UpdatePos(uint8_t x, uint8_t y);
-  uint8_t Getx();
+  void UpdatePos(int16_t x, uint8_t y);
+  int16_t Getx();
   uint8_t Gety();
   void ToggleDirection();
   direction_t GetDir();

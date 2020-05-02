@@ -5,12 +5,15 @@
 #include "PlayerShip.h" 
 #include "Images.h" 
 
+#define RIGHT_XPOS 32
+#define LEFT_XPOS 138
+
 PlayerShip::PlayerShip(){
   Rsprite = Sprite(PlayerShipR, 10, 21);
   Lsprite = Sprite(PlayerShipL, 10, 21);
   HRsprite = Sprite(HyperShipR, 10, 28);
   HLsprite = Sprite(HyperShipL, 10, 28);
-  x = 32;
+  x = RIGHT_XPOS;
   y = 80;
   hyper = false;
   dir = right;
@@ -20,13 +23,13 @@ PlayerShip::PlayerShip(){
 void PlayerShip::Draw(){
   if(dir == right){
     if(hyper){
-      HRsprite.Draw(x, y);
+      HRsprite.Draw(x + 2, y);
     }else{
       Rsprite.Draw(x, y);
     }
   }else{
     if(hyper){
-      HLsprite.Draw(x, y);
+      HLsprite.Draw(x + 5, y);
     }else{
       Lsprite.Draw(x, y);
     }
@@ -34,7 +37,8 @@ void PlayerShip::Draw(){
 }
 
 //y value is raw ADC value and must be converted
-void PlayerShip::UpdatePos(uint8_t new_x, uint8_t new_y){
+void PlayerShip::UpdatePos(int16_t new_x, uint8_t new_y){
+  //Compute new y
   uint8_t old_y = y;
   
   if((new_y - old_y) > 2){
@@ -45,10 +49,18 @@ void PlayerShip::UpdatePos(uint8_t new_x, uint8_t new_y){
   }
   
   y = new_y;
+  
+  //Compute new x
+  if(new_x != RIGHT_XPOS && dir == right){
+    new_x -= 1;
+  }else if(new_x != LEFT_XPOS && dir == left){
+    new_x += 1;
+  }
+  
   x = new_x;
 }
 
-uint8_t PlayerShip::Getx(){
+int16_t PlayerShip::Getx(){
   return x;
 }
   

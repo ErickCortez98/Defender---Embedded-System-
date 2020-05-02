@@ -5,6 +5,7 @@
 
 #include <stdint.h>
 #include "ST7735.h"
+#include "PlayerShip.h"
 
 #ifndef TERRAIN_H
 #define TERRAIN_H
@@ -81,9 +82,11 @@ const uint8_t TerrainData[TERRAINSIZE] = {
 
 
 
+
+
 void DrawTerrain();
 
-void UpdateTerrainIndex(int16_t mod_index);
+void UpdateTerrainIndex(direction_t dir, bool hyper);
 
 
 
