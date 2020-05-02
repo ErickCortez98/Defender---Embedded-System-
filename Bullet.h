@@ -7,8 +7,6 @@
 #ifndef BULLET_H
 #define BULLET_H
 
-typedef enum {dead,alive} status_t;
-
 class Bullet{ 
 	private:
   Sprite bulletSprite;

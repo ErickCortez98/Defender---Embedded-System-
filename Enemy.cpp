@@ -18,7 +18,7 @@ Enemy::Enemy (uint8_t x, uint8_t y, uint8_t typeEnemy){
 			enemySprite = Sprite(Enemy_2, 8, 15);
 			this->live = 100; //max live of big enemy
 		}
-		this->status = 1;
+		this->status = alive;
 		this->x = x;
 		this->y = y;
 }
@@ -51,10 +51,10 @@ uint8_t Enemy::getX(){
 uint8_t Enemy::getY(){
 	return this->y;
 }
-uint8_t Enemy::getStatus(){
+status_t Enemy::getStatus(){
 	return status;
 }
-void Enemy::setStatus(uint8_t newStatus){
+void Enemy::setStatus(status_t newStatus){
 	this->status = newStatus;
 }
 uint8_t Enemy::getLive(){
@@ -69,7 +69,7 @@ void Enemy::Draw(){
 	UpdatePos(getX() - 1, getY()  + randomUpDownFn());
 	//Checking if we are outside the screen meaning the status changes to dead alien! (FOR NOW)
 	if(getX() < 1){
-    status = 0;
+    status = dead;
   }
 }
 void Enemy::UpdatePos(uint16_t new_x, uint16_t new_y){

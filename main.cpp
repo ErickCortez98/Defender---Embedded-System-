@@ -182,7 +182,7 @@ void DrawEnemies(){
 	Node<Enemy> *current = EnemyList.head;
 	while(current != NULL){
 		current->data->Draw();
-		if(current->data->getStatus() == 0){
+		if(current->data->getStatus() == dead){
 			current = EnemyList.remove(current);
 		}else{
 			current = current->next;

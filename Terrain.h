@@ -81,33 +81,9 @@ const uint8_t TerrainData[TERRAINSIZE] = {
 
 
 
-void DrawTerrain(){
-  if(TerrainIndex != LastTerrainIndex){
-    for(int i = 0; i < SCREENWIDTH; i++){
-      
-      int index = TerrainIndex + i;
-      int last_index = LastTerrainIndex + i;
-      
-      if(index >= TERRAINSIZE){
-        index -= TERRAINSIZE;
-      }
-      if(last_index >= TERRAINSIZE){
-        last_index -= TERRAINSIZE;
-      }
-      
-      ST7735_DrawPixel(TerrainData[last_index], i, ST7735_BLACK);//clear the last drawn terrain
-      ST7735_DrawPixel(TerrainData[index], i, ST7735_YELLOW);
-    }
-  }
-}
+void DrawTerrain();
 
-void UpdateTerrainIndex(int16_t mod_index){
-  LastTerrainIndex = TerrainIndex;
-  TerrainIndex += mod_index;//need to modify for overflow and underflow
-  if(TerrainIndex >= TERRAINSIZE){
-    TerrainIndex -= TERRAINSIZE;
-  }
-}
+void UpdateTerrainIndex(int16_t mod_index);
 
 
 

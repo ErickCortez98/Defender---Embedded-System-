@@ -7,6 +7,8 @@
 #include <stdint.h>
 
 
+typedef enum {dead,alive} status_t;
+
 //Sprite class to be used for any class that needs something drawn
 class Sprite{ private:
   const unsigned short *image; // ptr->image
