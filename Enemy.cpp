@@ -14,13 +14,16 @@ Enemy::Enemy (uint8_t x, uint8_t y, uint8_t typeEnemy){
 		if(typeEnemy == 1){
 			enemySprite = Sprite(Enemy_1, 12, 13);
 			this->live = 50; //max live of small enemy
+			this->velocity = 1;
 		}else{
 			enemySprite = Sprite(Enemy_2, 8, 15);
 			this->live = 100; //max live of big enemy
+			this->velocity = 2;
 		}
 		this->status = alive;
 		this->x = x;
 		this->y = y;
+		this->updatePosition = 0;
 }
 //helper function to go up or down in the vertical positon
 int8_t Enemy::randomUpDownFn(){
@@ -65,12 +68,16 @@ void Enemy::reduceLive(uint8_t liveReduction){
 }
 void Enemy::Draw(){
 	enemySprite.Draw(x, y);
-	//updating enemy position to the left
-	UpdatePos(getX() - 1, getY()  + randomUpDownFn());
+	//updating enemy position to the left - this reduces the overall speed of both enemies as they move to the left and up and down as well, if the number is bigger in the condition
+	if(updatePosition == 3){
+		UpdatePos(getX() - this->velocity, getY()  + randomUpDownFn());
+		updatePosition = 0;
+	}
 	//Checking if we are outside the screen meaning the status changes to dead alien! (FOR NOW)
-	if(getX() < 1){
+	if(getX() < 0){
     status = dead;
   }
+	updatePosition++;
 }
 void Enemy::UpdatePos(uint16_t new_x, uint16_t new_y){
 		x = new_x;
