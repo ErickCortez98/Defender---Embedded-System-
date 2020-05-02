@@ -24,6 +24,7 @@ public:
   uint8_t Getx();
   uint8_t Gety();
   status_t GetStatus();
+
 };
 
 
