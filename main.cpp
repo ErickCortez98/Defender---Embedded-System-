@@ -92,29 +92,40 @@ uint8_t randomInitFlag = 1;
 uint8_t Flag = 1;
 uint32_t Score = 9950;
 uint8_t GameOn = 0;
+int spawnXLoc = 0;
+uint8_t spawnYLoc = 0;
+direction_t directionEnemy;
 
 void addEnemies(){ //spawning rates are determined in this function
 	//if Score < 100, we'll add 2 enemies
 	//NOTE: The +10 added to Random()%MAXREACHSHIP allows the ships to be a little bit above the very bottom of the screen (because the ship doesn't go that down)
+ //if Random function returns a 0, then we spawn from the right side of the screen, otherwise from the left
+	if(RandomN(2) == 0){
+		spawnXLoc = SCREENWIDTH+ RandomN(10);
+		directionEnemy = left;
+	}else{
+		spawnXLoc = 0; 
+		directionEnemy = right;
+	}
+	
+	spawnYLoc = RandomN(MAXREACHSHIP + 10);
 	if(Score < 100){
 			for(int i = EnemyList.getLength(); i < RandomN(2); i++){ //adding only the enemies necessary to get to 2
-				Enemy *enemy = new Enemy(SCREENWIDTH+ RandomN(10), RandomN(MAXREACHSHIP + 10), 1); //we create a new enemy in a random x location
+				Enemy *enemy = new Enemy(spawnXLoc, spawnYLoc, 1, directionEnemy); //we create a new enemy in a random x location
 				EnemyList.push_front(enemy); //we add the enemy to the list
 			}
 	}
 
 	else if(Score >= 100 && Score < 500){ //we'll add 3 enemies
 		for(int i = EnemyList.getLength(); i < RandomN(3); i++){ //adding only the enemies necessary to get to 3
-			//TODO: Check this values for x and y are actually correct
-			Enemy *enemy = new Enemy(SCREENWIDTH+ RandomN(10), RandomN(MAXREACHSHIP + 10), 1); //we create a new enemy in a random x location
+			Enemy *enemy = new Enemy(spawnXLoc, spawnYLoc, 1, directionEnemy); //we create a new enemy in a random x location
 			EnemyList.push_front(enemy); //we add the enemy to the list
 		}
 	}
 
 	else if(Score >= 500 && Score < 1000){ //we'll add 5 enemies
 		for(int i = EnemyList.getLength(); i < RandomN(5); i++){ //adding only the enemies necessary to get to 5
-			//TODO: Check this values for x and y are actually correct
-			Enemy *enemy = new Enemy(SCREENWIDTH+ RandomN(10), RandomN(MAXREACHSHIP + 10), RandomN(2)); //we create a new enemy in a random x location
+			Enemy *enemy = new Enemy(spawnXLoc, spawnYLoc, RandomN(2), directionEnemy); //we create a new enemy in a random x location
 			EnemyList.push_front(enemy); //we add the enemy to the list
 		}
 	}
@@ -124,9 +135,8 @@ void addEnemies(){ //spawning rates are determined in this function
 				return;
 			}
 			for(int i = EnemyList.getLength(); i < RandomN(8); i++){ //adding only the enemies necessary to get to 8
-			//TODO: Check this values for x and y are actually correct
-			Enemy *enemy = new Enemy(SCREENWIDTH+ RandomN(10), RandomN(MAXREACHSHIP + 10), RandomN(2)); //we create a new enemy in a random x location
-			EnemyList.push_front(enemy); //we add the enemy to the list
+				Enemy *enemy = new Enemy(spawnXLoc, spawnYLoc, RandomN(2), directionEnemy); //we create a new enemy in a random x location
+				EnemyList.push_front(enemy); //we add the enemy to the list
 		}
 	}
 }

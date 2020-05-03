@@ -6,21 +6,21 @@
 #include <stdint.h>
 #include "Images.h"
 #include "Random.h"
-#include "PlayerShip.h"
-
+#define SCREENWIDTH 160
 #define MAXENEMIES 10
 
-Enemy::Enemy (int x, uint8_t y, uint8_t typeEnemy){
+Enemy::Enemy (int x, uint8_t y, uint8_t typeEnemy, direction_t direction){
 		//if enemy's live is 50, then we now is enemy type 1, otherwise, it is 100, so the enmey is type 2
 		if(typeEnemy == 1){
-			enemySprite = Sprite(Enemy_1, 12, 13);
+			enemySprite = Sprite(Enemy_1, 12, 15);
 			this->live = 50; //max live of small enemy
 			this->velocity = 1;
-		}else{
-			enemySprite = Sprite(Enemy_2_Hyper, 8, 15);
+		}else{	
+			enemySprite = Sprite(Enemy_2_Hyper, 8, 19);
 			this->live = 100; //max live of big enemy
 			this->velocity = 2;
 		}
+		this->direction  = direction;
 		this->status = alive;
 		this->x = x;
 		this->y = y;
@@ -67,17 +67,24 @@ uint8_t Enemy::getLive(){
 void Enemy::reduceLive(uint8_t liveReduction){
 	this->live -= liveReduction;
 }
-void Enemy::Draw(uint8_t hyper){
+void Enemy::Draw(uint8_t hyper){ //TODO: DIRECTION
 	enemySprite.Draw(x, y);
-	//updating enemy position to the left - this reduces the overall speed of both enemies as they move to the left and up and down as well, if the number is bigger in the condition
-	
+	if(direction == left){
+		//updating enemy position to the left - this reduces the overall speed of both enemies as they move to the left and up and down as well, if the number is bigger in the condition
 		if(updatePosition == 3){
 			UpdatePos(getX() - this->velocity - 2*hyper, getY()  + randomUpDownFn());
 			updatePosition = 0;
 		}
+	}else{
+		//updating enemy position to the right - this reduces the overall speed of both enemies as they move to the right and up and down as well, if the number is bigger in the condition
+		if(updatePosition == 3){
+			UpdatePos(getX() + this->velocity + 2*hyper, getY()  + randomUpDownFn());
+			updatePosition = 0;
+		}
+	}
 	
-	//Checking if we are outside the screen meaning the status changes to dead alien! (FOR NOW)
-	if(x < 0){
+	//Checking if we are outside the screen either in the left or right side meaning the status changes to dead alien (for now) 
+	if(x < 0 || x > SCREENWIDTH + 12){
     status = dead;
   }
 	updatePosition++;

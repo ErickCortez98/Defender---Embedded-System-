@@ -55,7 +55,7 @@ uint8_t Random (void){
 // Output: random number
 uint32_t RandomN(uint32_t numberOfRandoms){
 	int test = ((Random())%numberOfRandoms);
-  return test;  // returns 0, 1, 2, 3, 4 ... numberOfRandoms
+  return test;  // returns 0, 1, 2, 3, 4 ... numberOfRandoms - 1
 }
 
 

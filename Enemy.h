@@ -4,6 +4,7 @@
 
 #include <stdint.h>
 #include "Sprite.h"
+#include "PlayerShip.h"
 
 class Enemy{
 	private: 
@@ -14,8 +15,9 @@ class Enemy{
 		uint8_t y;
 		uint8_t updatePosition;
 		uint8_t velocity; //we have different velocity depending on the enemy
+		direction_t direction; //if enemy has direction right, then it spawns from the left, otherwise it spawns from the right
 	public:
-		Enemy(int x, uint8_t y, uint8_t typeEnemy);//constructor, we specify the type of our enemy with it's initial live
+		Enemy(int x, uint8_t y, uint8_t typeEnemy, direction_t direction);//constructor, we specify the type of our enemy with it's initial live
 		uint8_t getX();
 		uint8_t getY();
 		status_t getStatus();
