@@ -89,7 +89,7 @@ uint32_t time = 0;
 uint32_t timeEnemies = 0;
 uint8_t randomInitFlag = 1;
 uint8_t Flag = 1;
-uint32_t Score = 0;
+uint32_t Score = 9950;
 
 void addEnemies(){ //spawning rates are determined in this function
 	//if Score < 100, we'll add 2 enemies
@@ -205,10 +205,12 @@ void DisplayScore(){
   ST7735_SetRotation(1);
   
   if(Score < 10){
-    ST7735_SetCursor(4, 1);
+    ST7735_SetCursor(5, 1);
   }else if(Score < 100){
-    ST7735_SetCursor(3, 1);
+    ST7735_SetCursor(4, 1);
   }else if(Score < 1000){
+    ST7735_SetCursor(3, 1);
+  }else if(Score < 10000){
     ST7735_SetCursor(2, 1);
   }else{
     ST7735_SetCursor(1, 1);
