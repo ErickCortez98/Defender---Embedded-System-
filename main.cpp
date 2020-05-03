@@ -89,19 +89,19 @@ uint32_t time = 0;
 uint32_t timeEnemies = 0;
 uint8_t randomInitFlag = 1;
 uint8_t Flag = 1;
-uint32_t score = 0;
+uint32_t Score = 0;
 
 void addEnemies(){ //spawning rates are determined in this function
-	//if score < 100, we'll add 2 enemies
+	//if Score < 100, we'll add 2 enemies
 	//NOTE: The +10 added to Random()%MAXREACHSHIP allows the ships to be a little bit above the very bottom of the screen (because the ship doesn't go that down)
-	if(score < 100){
+	if(Score < 100){
 			for(int i = EnemyList.getLength(); i < RandomN(2); i++){ //adding only the enemies necessary to get to 2
 				Enemy *enemy = new Enemy(SCREENWIDTH+ RandomN(10), RandomN(MAXREACHSHIP + 10), 1); //we create a new enemy in a random x location
 				EnemyList.push_front(enemy); //we add the enemy to the list
 			}
 	}
 
-	else if(score >= 100 && score < 500){ //we'll add 3 enemies
+	else if(Score >= 100 && Score < 500){ //we'll add 3 enemies
 		for(int i = EnemyList.getLength(); i < RandomN(3); i++){ //adding only the enemies necessary to get to 3
 			//TODO: Check this values for x and y are actually correct
 			Enemy *enemy = new Enemy(SCREENWIDTH+ RandomN(10), RandomN(MAXREACHSHIP + 10), 1); //we create a new enemy in a random x location
@@ -109,7 +109,7 @@ void addEnemies(){ //spawning rates are determined in this function
 		}
 	}
 
-	else if(score >= 500 && score < 1000){ //we'll add 5 enemies
+	else if(Score >= 500 && Score < 1000){ //we'll add 5 enemies
 		for(int i = EnemyList.getLength(); i < RandomN(5); i++){ //adding only the enemies necessary to get to 5
 			//TODO: Check this values for x and y are actually correct
 			Enemy *enemy = new Enemy(SCREENWIDTH+ RandomN(10), RandomN(MAXREACHSHIP + 10), RandomN(2)); //we create a new enemy in a random x location
@@ -133,8 +133,8 @@ void clock(void){
   time++;
 	timeEnemies++;
 	toggle_Heartbeat();
-	//every 3 seconds we add enemies depending on the current score of the user
-	//TODO: change the spawning rate, decreasing the seconds if scores increments more
+	//every 3 seconds we add enemies depending on the current Score of the user
+	//TODO: change the spawning rate, decreasing the seconds if Scores increments more
 	if(timeEnemies == 3){
 		addEnemies();
 		timeEnemies = 0;
@@ -190,15 +190,32 @@ void DrawEnemies(){
 	while(current != NULL){
 			current->data->Draw(Player.GetHyper()); //we sent true or false to the function to know if we increase or not the velocity
 		if(current->data->getStatus() == dead){
-			score+=50;
+			Score+=50;
 			current = EnemyList.remove(current);
-			//checking random number generator
-			ST7735_SetCursor(0,0);
-			LCD_OutDec1(score);
+
+			//ST7735_SetCursor(0,0);
+			//LCD_OutDec1(Score);
 		}else{
 			current = current->next;
 		}
 	}
+}
+
+void DisplayScore(){
+  ST7735_SetRotation(1);
+  
+  if(Score < 10){
+    ST7735_SetCursor(4, 1);
+  }else if(Score < 100){
+    ST7735_SetCursor(3, 1);
+  }else if(Score < 1000){
+    ST7735_SetCursor(2, 1);
+  }else{
+    ST7735_SetCursor(1, 1);
+  }
+    
+  LCD_OutDec1(Score);
+  ST7735_SetRotation(0);
 }
 
 void background(void){
@@ -239,9 +256,7 @@ int main(void){
   DrawUI();
 
   Timer0_Init(&background,1600000); // 50 Hz
-
-	ST7735_SetCursor(0,0);
-	LCD_OutDec1(score);
+	
 
   while(1){
     while(Flag == 0){}
@@ -251,6 +266,7 @@ int main(void){
     Player.Draw();
 		DrawEnemies();
     DrawMap();
+    DisplayScore();
   }
 
 }
