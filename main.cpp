@@ -69,6 +69,7 @@
 #include "Terrain.h"
 #include "HelperFns.h"
 #include "Enemy.h"
+#include "StartScreen.h"
 
 extern "C" void DisableInterrupts(void);
 extern "C" void EnableInterrupts(void);
@@ -90,6 +91,7 @@ uint32_t timeEnemies = 0;
 uint8_t randomInitFlag = 1;
 uint8_t Flag = 1;
 uint32_t Score = 9950;
+uint8_t GameOn = 0;
 
 void addEnemies(){ //spawning rates are determined in this function
 	//if Score < 100, we'll add 2 enemies
@@ -131,13 +133,15 @@ void addEnemies(){ //spawning rates are determined in this function
 
 void clock(void){
   time++;
-	timeEnemies++;
 	toggle_Heartbeat();
 	//every 3 seconds we add enemies depending on the current Score of the user
 	//TODO: change the spawning rate, decreasing the seconds if Scores increments more
-	if(timeEnemies == 3){
-		addEnemies();
-		timeEnemies = 0;
+	if(GameOn){
+		timeEnemies++;
+		if(timeEnemies == 3){
+			addEnemies();
+			timeEnemies = 0;
+		}
 	}
 }
 
@@ -152,10 +156,14 @@ void GPIOPortE_Handler(void){
 
 	//polling for FireButton
 	if(FireButton()){
-		GPIO_PORTE_ICR_R = 0x1; //Acknowledge flag 0
-    Bullet* bullet = new Bullet(Player.Getx(), Player.Gety(), Player.GetDir());
-		BulletList.push_front(bullet);
-
+		if(!GameOn){ //We start the game if gameOn is 0 by setting GameOn to 1 meaning we get out of the loop of the main function
+			GameOn = 1;
+		}else{
+			GPIO_PORTE_ICR_R = 0x1; //Acknowledge flag 0
+			Bullet* bullet = new Bullet(Player.Getx(), Player.Gety(), Player.GetDir());
+			BulletList.push_front(bullet);
+		}
+		
 		//checking random number generator
 		//ST7735_SetCursor(0,200);
 		//LCD_OutDec1(Random());
@@ -254,6 +262,10 @@ int main(void){
 //  ST7735_SetTextColor(ST7735_WHITE);
 //  ST7735_OutString((char*)"By Jaxon & Erick");
 //  wait(2);//wait 2 seconds before clearing screen
+	drawStartScreen(); //start screen which pauses the initialiation of the game 
+	while(!GameOn){
+	}
+
   ST7735_FillScreen(0x0000);
   DrawUI();
 
