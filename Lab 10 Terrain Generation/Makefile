@@ -40,9 +40,13 @@ $(PROGRAM): $(OBJS)
 test: $(PROGRAM)
 	./$(PROGRAM)
 
-out: $(PROGRAM)
-	-rm -f out.txt
-	./$(PROGRAM) >> out.txt
+out1: $(PROGRAM)
+	-rm -f out1.txt
+	./$(PROGRAM) >> out1.txt
+
+out2: $(PROGRAM)
+	-rm -f out2.txt
+	./$(PROGRAM) >> out2.txt
 
 clean:
 	-rm -f $(OBJS) $(PROGRAM)

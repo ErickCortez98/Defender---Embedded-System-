@@ -10,7 +10,7 @@ Wrote terrain generation code for defender game
 
 using namespace std;
 
-#define SIZE 1120
+#define SIZE 640
 
 int main(void) {
     int last = 3;
@@ -18,13 +18,13 @@ int main(void) {
     int slope;
     for(int i = 0; i < SIZE; i++){
         if(length == 0) {
-            length = (rand() % 15) + 5;
-            slope = rand() % 6;
+            length = (rand() % 5) + 5;
+            slope = rand() % 10;
         }
 
         int el = last;
 
-        if(slope == 5 && el < 20){
+        if(slope >= 6 && el < 20){
             el = last + 1;
             last = el;
         }else if(el > 3){
@@ -35,12 +35,12 @@ int main(void) {
 
         length--;
 
-        if(i != SIZE - 1)
-            cout << el <<", ";
-        else
+        //if(i != SIZE - 1)
+            //cout << el <<", ";
+        //else
             cout << el;
-        if(i % 20 == 0 && i != 0){
+        //if(i % 20 == 0 && i != 0){
             cout << endl;
-        }
+        //}
     }
 }

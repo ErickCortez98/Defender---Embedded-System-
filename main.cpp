@@ -233,6 +233,7 @@ int main(void){
 //  ST7735_OutString((char*)"By Jaxon & Erick");
 //  wait(2);//wait 2 seconds before clearing screen
   ST7735_FillScreen(0x0000);
+  DrawUI();
   
   Timer0_Init(&background,1600000); // 50 Hz
   
@@ -243,6 +244,7 @@ int main(void){
     DrawBullets();
     Player.Draw();
 		DrawEnemies();
+    DrawMap();
   }
 
 }
