@@ -5,7 +5,7 @@
 
 #include "Terrain.h"
 
-#define TERRAINSPEED 2
+#define TERRAINSPEEDMAX 64
 
 void DrawTerrain(){
   for(int i = 0; i < SCREENWIDTH; i++){
@@ -27,19 +27,30 @@ void DrawTerrain(){
 
 void UpdateTerrainIndex(direction_t dir, bool hyper){
   LastTerrainIndex = TerrainIndex;
-  
-  if(hyper){
-    if(dir == right){
-      TerrainIndex += TERRAINSPEED;
-    }else if(dir == left && TerrainIndex < TERRAINSPEED){
-      TerrainIndex = (TERRAINSIZE + TerrainIndex) - TERRAINSPEED;
-    }else{
-      TerrainIndex -= TERRAINSPEED;
-    }
+  static int8_t velocity = 0;
+  int8_t vel = velocity/8;
+  if(vel || hyper){
+    TerrainIndex += vel;
     
     if(TerrainIndex >= TERRAINSIZE){
       TerrainIndex -= TERRAINSIZE;
+    }else if(TerrainIndex < 0){
+      TerrainIndex += TERRAINSIZE;
     }
+    
+    
+    if(!hyper && velocity != 0){
+      if(velocity < 0){
+        velocity += 1;
+      }else if(velocity > 0){
+        velocity -= 1;
+      }
+    }else if(velocity < TERRAINSPEEDMAX && dir == right){
+      velocity += 1;
+    }else if(velocity > -TERRAINSPEEDMAX && dir == left){
+      velocity -= 1;
+    }
+    
   }
 }
 

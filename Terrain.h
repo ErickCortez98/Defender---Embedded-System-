@@ -14,9 +14,8 @@
 #define TERRAINSIZE 640
 #define MAPSIZE 80
 
-static uint16_t TerrainVelocity = 0;
-static uint16_t TerrainIndex = 0;
-static uint16_t LastTerrainIndex = TERRAINSIZE;
+static int16_t TerrainIndex = 0;
+static int16_t LastTerrainIndex = TERRAINSIZE;
 
 
 const uint8_t TerrainData[TERRAINSIZE] = {
@@ -69,7 +68,10 @@ const uint8_t TerrainData[TERRAINSIZE] = {
 
 
 const uint8_t TerrainMapData[MAPSIZE] = {
-  2,1,0,0,0,0,0,0,0,1,2,1,2,3,4,3,2,3,2,1,1,2,3,4,5,4,5,4,3,4,5,4,3,2,3,2,2,3,4,5,4,4,3,2,1,2,2,3,4,3,2,1,0,0,0,0,0,0,1,2,3,4,4,5,4,5,4,4,3,4,5,4,3,2,1,0,0,0,0,1
+  2,1,0,0,0,0,0,0,0,1,2,1,2,3,4,3,2,3,2,1,
+  1,2,3,4,5,4,5,4,3,4,5,4,3,2,3,2,2,3,4,5,
+  4,4,3,2,1,2,2,3,4,3,2,1,0,0,0,0,0,0,1,2,
+  3,4,4,5,4,5,4,4,3,4,5,4,3,2,1,0,0,0,0,1
 
 };
 
