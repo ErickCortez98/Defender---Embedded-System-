@@ -49,7 +49,7 @@ int8_t Enemy::randomUpDownFn(){
 		return -1;
 	}
 }
-uint8_t Enemy::getX(){
+int Enemy::getX(){
 	return this->x;
 }
 uint8_t Enemy::getY(){
@@ -67,24 +67,32 @@ uint8_t Enemy::getLive(){
 void Enemy::reduceLive(uint8_t liveReduction){
 	this->live -= liveReduction;
 }
-void Enemy::Draw(uint8_t hyper){ //TODO: DIRECTION
+void Enemy::Draw(uint8_t hyper, direction_t playerShipDirection){ 
 	enemySprite.Draw(x, y);
 	if(direction == left){
 		//updating enemy position to the left - this reduces the overall speed of both enemies as they move to the left and up and down as well, if the number is bigger in the condition
 		if(updatePosition == 3){
-			UpdatePos(getX() - this->velocity - 2*hyper, getY()  + randomUpDownFn());
+			if(playerShipDirection == right){
+				UpdatePos(getX() - this->velocity - 2*hyper, getY()  + randomUpDownFn());
+			}else{
+				UpdatePos(getX() - this->velocity + 3*hyper, getY()  + randomUpDownFn());
+			}
 			updatePosition = 0;
 		}
 	}else{
 		//updating enemy position to the right - this reduces the overall speed of both enemies as they move to the right and up and down as well, if the number is bigger in the condition
 		if(updatePosition == 3){
-			UpdatePos(getX() + this->velocity + 2*hyper, getY()  + randomUpDownFn());
+			if(playerShipDirection == right){
+				UpdatePos(getX() + this->velocity - 3*hyper, getY()  + randomUpDownFn());
+			}else{
+				UpdatePos(getX() + this->velocity + 2*hyper, getY()  + randomUpDownFn());
+			}
 			updatePosition = 0;
 		}
 	}
 	
 	//Checking if we are outside the screen either in the left or right side meaning the status changes to dead alien (for now) 
-	if(x < 0 || x > SCREENWIDTH + 12){
+	if(x < -10 || x > SCREENWIDTH + 15){
     status = dead;
   }
 	updatePosition++;

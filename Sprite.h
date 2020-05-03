@@ -17,7 +17,7 @@ class Sprite{ private:
 public:
   Sprite(){}
   Sprite(const unsigned short* init_im, uint8_t init_w, uint8_t init_h): image(init_im), w(init_w), h(init_h) {}
-  void Draw(int16_t x, uint8_t y);
+  void Draw(int x, uint8_t y);
 };
 
 

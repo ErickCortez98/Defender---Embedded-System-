@@ -96,28 +96,34 @@ int spawnXLoc = 0;
 uint8_t spawnYLoc = 0;
 direction_t directionEnemy;
 
-void addEnemies(){ //spawning rates are determined in this function
-	//if Score < 100, we'll add 2 enemies
-	//NOTE: The +10 added to Random()%MAXREACHSHIP allows the ships to be a little bit above the very bottom of the screen (because the ship doesn't go that down)
+void getSpawnLoc(void){
  //if Random function returns a 0, then we spawn from the right side of the screen, otherwise from the left
 	if(RandomN(2) == 0){
 		spawnXLoc = SCREENWIDTH+ RandomN(10);
 		directionEnemy = left;
 	}else{
-		spawnXLoc = 0; 
+		spawnXLoc = RandomN(10); 
+		spawnXLoc = spawnXLoc*(-1);
 		directionEnemy = right;
 	}
+}
+
+void addEnemies(){ //spawning rates are determined in this function
+	//if Score < 100, we'll add 2 enemies
+	//NOTE: The +10 added to Random()%MAXREACHSHIP allows the ships to be a little bit above the very bottom of the screen (because the ship doesn't go that down)
 	
 	spawnYLoc = RandomN(MAXREACHSHIP + 10);
 	if(Score < 100){
-			for(int i = EnemyList.getLength(); i < RandomN(2); i++){ //adding only the enemies necessary to get to 2
-				Enemy *enemy = new Enemy(spawnXLoc, spawnYLoc, 1, directionEnemy); //we create a new enemy in a random x location
-				EnemyList.push_front(enemy); //we add the enemy to the list
-			}
+		for(int i = EnemyList.getLength(); i < RandomN(2); i++){ //adding only the enemies necessary to get to 2
+			getSpawnLoc();
+			Enemy *enemy = new Enemy(spawnXLoc, spawnYLoc, 1, directionEnemy); //we create a new enemy in a random x location
+			EnemyList.push_front(enemy); //we add the enemy to the list
+		}
 	}
 
 	else if(Score >= 100 && Score < 500){ //we'll add 3 enemies
 		for(int i = EnemyList.getLength(); i < RandomN(3); i++){ //adding only the enemies necessary to get to 3
+			getSpawnLoc();
 			Enemy *enemy = new Enemy(spawnXLoc, spawnYLoc, 1, directionEnemy); //we create a new enemy in a random x location
 			EnemyList.push_front(enemy); //we add the enemy to the list
 		}
@@ -125,18 +131,20 @@ void addEnemies(){ //spawning rates are determined in this function
 
 	else if(Score >= 500 && Score < 1000){ //we'll add 5 enemies
 		for(int i = EnemyList.getLength(); i < RandomN(5); i++){ //adding only the enemies necessary to get to 5
+			getSpawnLoc();
 			Enemy *enemy = new Enemy(spawnXLoc, spawnYLoc, RandomN(2), directionEnemy); //we create a new enemy in a random x location
 			EnemyList.push_front(enemy); //we add the enemy to the list
 		}
 	}
 
 	else{ //we'll add 8 enemies
-			if(EnemyList.getLength() == 8){ //if we have 8 enemies already being displayed we don't add more
-				return;
-			}
-			for(int i = EnemyList.getLength(); i < RandomN(8); i++){ //adding only the enemies necessary to get to 8
-				Enemy *enemy = new Enemy(spawnXLoc, spawnYLoc, RandomN(2), directionEnemy); //we create a new enemy in a random x location
-				EnemyList.push_front(enemy); //we add the enemy to the list
+		if(EnemyList.getLength() == 8){ //if we have 8 enemies already being displayed we don't add more
+			return;
+		}
+		for(int i = EnemyList.getLength(); i < RandomN(8); i++){ //adding only the enemies necessary to get to 8
+			getSpawnLoc();
+			Enemy *enemy = new Enemy(spawnXLoc, spawnYLoc, RandomN(2), directionEnemy); //we create a new enemy in a random x location
+			EnemyList.push_front(enemy); //we add the enemy to the list
 		}
 	}
 }
@@ -206,7 +214,7 @@ void DrawEnemies(){
 	//draw enemies that are currently in the enemyList
 	Node<Enemy> *current = EnemyList.head;
 	while(current != NULL){
-			current->data->Draw(Player.GetHyper()); //we sent true or false to the function to know if we increase or not the velocity
+			current->data->Draw(Player.GetHyper(), Player.GetDir()); //we sent true or false to the function to know if we increase or not the velocity
 		if(current->data->getStatus() == dead){
 			Score+=50;
 			current = EnemyList.remove(current);

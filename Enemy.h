@@ -18,13 +18,13 @@ class Enemy{
 		direction_t direction; //if enemy has direction right, then it spawns from the left, otherwise it spawns from the right
 	public:
 		Enemy(int x, uint8_t y, uint8_t typeEnemy, direction_t direction);//constructor, we specify the type of our enemy with it's initial live
-		uint8_t getX();
+		int getX();
 		uint8_t getY();
 		status_t getStatus();
 		void setStatus(status_t newStatus);
 		uint8_t getLive();
 		void reduceLive(uint8_t liveReduction);
-		void Draw(uint8_t hyper);
+		void Draw(uint8_t hyper, direction_t playerShipDirection);
 		void UpdatePos(int x, uint16_t y);
 		int8_t randomUpDownFn();
 	
