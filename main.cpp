@@ -3,7 +3,7 @@
 // Jonathan Valvano and Daniel Valvano
 // This is a starter project for the EE319K Lab 10 in C++
 
-// Last Modified: 1/17/2020 
+// Last Modified: 1/17/2020
 // http://www.spaceinvaders.de/
 // sounds at http://www.classicgaming.cc/classics/spaceinvaders/sounds.php
 // http://www.classicgaming.cc/classics/spaceinvaders/playguide.php
@@ -28,7 +28,7 @@
 // ******* Possible Hardware I/O connections*******************
 // Slide pot pin 1 connected to ground
 // Slide pot pin 2 connected to PD2/AIN5
-// Slide pot pin 3 connected to +3.3V 
+// Slide pot pin 3 connected to +3.3V
 // fire button connected to PE0
 // special weapon fire button connected to PE1
 // 8*R resistor DAC bit 0 on PB0 (least significant bit)
@@ -49,7 +49,7 @@
 // VCC (pin 2) connected to +3.3 V
 // Gnd (pin 1) connected to ground
 
- 
+
 #include <stdint.h>
 #include "C:\Keil_v5\EE319KwareSpring2020\inc\TM4C123gh6pm.h"
 #include "PLL.h"
@@ -89,41 +89,41 @@ uint32_t time = 0;
 uint32_t timeEnemies = 0;
 uint8_t randomInitFlag = 1;
 uint8_t Flag = 1;
-uint32_t score = 506;
+uint32_t score = 0;
 
 void addEnemies(){ //spawning rates are determined in this function
 	//if score < 100, we'll add 2 enemies
 	//NOTE: The +10 added to Random()%MAXREACHSHIP allows the ships to be a little bit above the very bottom of the screen (because the ship doesn't go that down)
 	if(score < 100){
-			for(int i = EnemyList.getLength(); i < 1; i++){ //adding only the enemies necessary to get to 2
-				Enemy *enemy = new Enemy(SCREENWIDTH+Random()%5, Random()%MAXREACHSHIP + 10, 1); //we create a new enemy in a random x location
+			for(int i = EnemyList.getLength(); i < RandomN(2); i++){ //adding only the enemies necessary to get to 2
+				Enemy *enemy = new Enemy(SCREENWIDTH+ RandomN(10), RandomN(MAXREACHSHIP + 10), 1); //we create a new enemy in a random x location
 				EnemyList.push_front(enemy); //we add the enemy to the list
 			}
 	}
-	
+
 	else if(score >= 100 && score < 500){ //we'll add 3 enemies
-		for(int i = EnemyList.getLength()-1; i < Random()%3; i++){ //adding only the enemies necessary to get to 3
-			//TODO: Check this values for x and y are actually correct 
-			Enemy *enemy = new Enemy(SCREENWIDTH+Random()%5, Random()%MAXREACHSHIP + 10, 1); //we create a new enemy in a random x location
+		for(int i = EnemyList.getLength(); i < RandomN(3); i++){ //adding only the enemies necessary to get to 3
+			//TODO: Check this values for x and y are actually correct
+			Enemy *enemy = new Enemy(SCREENWIDTH+ RandomN(10), RandomN(MAXREACHSHIP + 10), 1); //we create a new enemy in a random x location
 			EnemyList.push_front(enemy); //we add the enemy to the list
 		}
 	}
-	
+
 	else if(score >= 500 && score < 1000){ //we'll add 5 enemies
-		for(int i = EnemyList.getLength()-1; i < Random()%5; i++){ //adding only the enemies necessary to get to 5
-			//TODO: Check this values for x and y are actually correct 
-			Enemy *enemy = new Enemy(SCREENWIDTH+Random()%5, Random()%MAXREACHSHIP + 10, Random()%2); //we create a new enemy in a random x location
+		for(int i = EnemyList.getLength(); i < RandomN(5); i++){ //adding only the enemies necessary to get to 5
+			//TODO: Check this values for x and y are actually correct
+			Enemy *enemy = new Enemy(SCREENWIDTH+ RandomN(10), RandomN(MAXREACHSHIP + 10), RandomN(2)); //we create a new enemy in a random x location
 			EnemyList.push_front(enemy); //we add the enemy to the list
 		}
 	}
-	
-	else{ //we'll add 8 enemies 
+
+	else{ //we'll add 8 enemies
 			if(EnemyList.getLength() == 8){ //if we have 8 enemies already being displayed we don't add more
 				return;
 			}
-			for(int i = EnemyList.getLength()-2; i < Random()%7; i++){ //adding only the enemies necessary to get to 8
-			//TODO: Check this values for x and y are actually correct 
-			Enemy *enemy = new Enemy(SCREENWIDTH+Random()%5, Random()%MAXREACHSHIP + 10, Random()%2); //we create a new enemy in a random x location
+			for(int i = EnemyList.getLength(); i < RandomN(8); i++){ //adding only the enemies necessary to get to 8
+			//TODO: Check this values for x and y are actually correct
+			Enemy *enemy = new Enemy(SCREENWIDTH+ RandomN(10), RandomN(MAXREACHSHIP + 10), RandomN(2)); //we create a new enemy in a random x location
 			EnemyList.push_front(enemy); //we add the enemy to the list
 		}
 	}
@@ -149,19 +149,19 @@ void GPIOPortE_Handler(void){
 		Random_Init(NVIC_ST_CURRENT_R);
 		randomInitFlag = 0;
 	}
-	
+
 	//polling for FireButton
-	if(FireButton()){		
+	if(FireButton()){
 		GPIO_PORTE_ICR_R = 0x1; //Acknowledge flag 0
     Bullet* bullet = new Bullet(Player.Getx(), Player.Gety(), Player.GetDir());
 		BulletList.push_front(bullet);
-		
+
 		//checking random number generator
 		//ST7735_SetCursor(0,200);
 		//LCD_OutDec1(Random());
 	}
 	//polling for HyperButton
-	if(HyperButton()){		
+	if(HyperButton()){
 		GPIO_PORTE_ICR_R = 0x2; //Acknowledge flag 1
     Player.ToggleHyper();
 	}
@@ -185,12 +185,16 @@ void DrawBullets(){
 }
 
 void DrawEnemies(){
-	//draw enemies that are currently in the enemyList 
+	//draw enemies that are currently in the enemyList
 	Node<Enemy> *current = EnemyList.head;
 	while(current != NULL){
 			current->data->Draw(Player.GetHyper()); //we sent true or false to the function to know if we increase or not the velocity
 		if(current->data->getStatus() == dead){
+			score+=50;
 			current = EnemyList.remove(current);
+			//checking random number generator
+			ST7735_SetCursor(0,0);
+			LCD_OutDec1(score);
 		}else{
 			current = current->next;
 		}
@@ -199,9 +203,9 @@ void DrawEnemies(){
 
 void background(void){
   Flag = 1;
-  
+
   UpdateTerrainIndex(Player.GetDir(), Player.GetHyper());
-  
+
   Joystick.Save(ADC_In());
   Player.UpdatePos(Player.Getx(), Joystick.GetY_Val());
 }
@@ -212,17 +216,16 @@ void wait(uint32_t sec){
 }
 
 int main(void){
-  PLL_Init(Bus80MHz);       // Bus clock is 80 MHz 
+  PLL_Init(Bus80MHz);       // Bus clock is 80 MHz
   ADC_Init();
-  Random_Init(1);
 	Buttons_Init();
 	EnableInterrupts();
+	SysTick_Init();
   Output_Init();
 	Heartbeat_Init();
   Timer1_Init(&clock,80000000); // 1 Hz
-  
-  
-  
+
+
 
 //  ST7735_FillScreen(0x0000);            // set screen to black
 //  ST7735_SetTextColor(ST7735_WHITE);
@@ -234,9 +237,12 @@ int main(void){
 //  wait(2);//wait 2 seconds before clearing screen
   ST7735_FillScreen(0x0000);
   DrawUI();
-  
+
   Timer0_Init(&background,1600000); // 50 Hz
-  
+
+	ST7735_SetCursor(0,0);
+	LCD_OutDec1(score);
+
   while(1){
     while(Flag == 0){}
     Flag = 0;
@@ -248,7 +254,3 @@ int main(void){
   }
 
 }
-
-
-
-

@@ -37,3 +37,11 @@ uint32_t Random32(void);
 // Input: none
 // Output: random number
 uint8_t Random (void);
+
+//------------Random Number------------
+// Return random number, 0 to N
+// Linear congruential generator 
+// from Numerical Recipes by Press et al.
+// Input: number of max random number we can get
+// Output: random number
+uint32_t RandomN(uint32_t numberOfRandoms);
