@@ -89,30 +89,30 @@ uint32_t time = 0;
 uint32_t timeEnemies = 0;
 uint8_t randomInitFlag = 1;
 uint8_t Flag = 1;
-uint32_t score = 506;
+uint32_t score = 0;
 
 void addEnemies(){ //spawning rates are determined in this function
 	//if score < 100, we'll add 2 enemies
 	//NOTE: The +10 added to Random()%MAXREACHSHIP allows the ships to be a little bit above the very bottom of the screen (because the ship doesn't go that down)
 	if(score < 100){
-			for(int i = EnemyList.getLength(); i < 1; i++){ //adding only the enemies necessary to get to 2
-				Enemy *enemy = new Enemy(SCREENWIDTH+Random()%5, Random()%MAXREACHSHIP + 10, 1); //we create a new enemy in a random x location
+			for(int i = EnemyList.getLength(); i < RandomN(2); i++){ //adding only the enemies necessary to get to 2
+				Enemy *enemy = new Enemy(SCREENWIDTH+ RandomN(10), RandomN(MAXREACHSHIP + 10), 1); //we create a new enemy in a random x location
 				EnemyList.push_front(enemy); //we add the enemy to the list
 			}
 	}
 	
 	else if(score >= 100 && score < 500){ //we'll add 3 enemies
-		for(int i = EnemyList.getLength()-1; i < Random()%3; i++){ //adding only the enemies necessary to get to 3
+		for(int i = EnemyList.getLength(); i < RandomN(3); i++){ //adding only the enemies necessary to get to 3
 			//TODO: Check this values for x and y are actually correct 
-			Enemy *enemy = new Enemy(SCREENWIDTH+Random()%5, Random()%MAXREACHSHIP + 10, 1); //we create a new enemy in a random x location
+			Enemy *enemy = new Enemy(SCREENWIDTH+ RandomN(10), RandomN(MAXREACHSHIP + 10), 1); //we create a new enemy in a random x location
 			EnemyList.push_front(enemy); //we add the enemy to the list
 		}
 	}
 	
 	else if(score >= 500 && score < 1000){ //we'll add 5 enemies
-		for(int i = EnemyList.getLength()-1; i < Random()%5; i++){ //adding only the enemies necessary to get to 5
+		for(int i = EnemyList.getLength(); i < RandomN(5); i++){ //adding only the enemies necessary to get to 5
 			//TODO: Check this values for x and y are actually correct 
-			Enemy *enemy = new Enemy(SCREENWIDTH+Random()%5, Random()%MAXREACHSHIP + 10, Random()%2); //we create a new enemy in a random x location
+			Enemy *enemy = new Enemy(SCREENWIDTH+ RandomN(10), RandomN(MAXREACHSHIP + 10), RandomN(2)); //we create a new enemy in a random x location
 			EnemyList.push_front(enemy); //we add the enemy to the list
 		}
 	}
@@ -121,9 +121,9 @@ void addEnemies(){ //spawning rates are determined in this function
 			if(EnemyList.getLength() == 8){ //if we have 8 enemies already being displayed we don't add more
 				return;
 			}
-			for(int i = EnemyList.getLength()-2; i < Random()%7; i++){ //adding only the enemies necessary to get to 8
+			for(int i = EnemyList.getLength(); i < RandomN(8); i++){ //adding only the enemies necessary to get to 8
 			//TODO: Check this values for x and y are actually correct 
-			Enemy *enemy = new Enemy(SCREENWIDTH+Random()%5, Random()%MAXREACHSHIP + 10, Random()%2); //we create a new enemy in a random x location
+			Enemy *enemy = new Enemy(SCREENWIDTH+ RandomN(10), RandomN(MAXREACHSHIP + 10), RandomN(2)); //we create a new enemy in a random x location
 			EnemyList.push_front(enemy); //we add the enemy to the list
 		}
 	}
@@ -190,7 +190,11 @@ void DrawEnemies(){
 	while(current != NULL){
 			current->data->Draw(Player.GetHyper()); //we sent true or false to the function to know if we increase or not the velocity
 		if(current->data->getStatus() == dead){
+			score+=50;
 			current = EnemyList.remove(current);
+			//checking random number generator
+			ST7735_SetCursor(0,0);
+			LCD_OutDec1(score);
 		}else{
 			current = current->next;
 		}
@@ -214,13 +218,12 @@ void wait(uint32_t sec){
 int main(void){
   PLL_Init(Bus80MHz);       // Bus clock is 80 MHz 
   ADC_Init();
-  Random_Init(1);
 	Buttons_Init();
 	EnableInterrupts();
+	SysTick_Init();
   Output_Init();
 	Heartbeat_Init();
   Timer1_Init(&clock,80000000); // 1 Hz
-  
   
   
 
@@ -233,9 +236,12 @@ int main(void){
 //  ST7735_OutString((char*)"By Jaxon & Erick");
 //  wait(2);//wait 2 seconds before clearing screen
   ST7735_FillScreen(0x0000);
-  
+ 
   Timer0_Init(&background,1600000); // 50 Hz
   
+	ST7735_SetCursor(0,0);
+	LCD_OutDec1(score);
+	
   while(1){
     while(Flag == 0){}
     Flag = 0;

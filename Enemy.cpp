@@ -10,7 +10,7 @@
 
 #define MAXENEMIES 10
 
-Enemy::Enemy (uint8_t x, uint8_t y, uint8_t typeEnemy){
+Enemy::Enemy (int x, uint8_t y, uint8_t typeEnemy){
 		//if enemy's live is 50, then we now is enemy type 1, otherwise, it is 100, so the enmey is type 2
 		if(typeEnemy == 1){
 			enemySprite = Sprite(Enemy_1, 12, 13);
@@ -77,13 +77,13 @@ void Enemy::Draw(uint8_t hyper){
 		}
 	
 	//Checking if we are outside the screen meaning the status changes to dead alien! (FOR NOW)
-	if(getX() + 1 == 0){
+	if(x < 0){
     status = dead;
   }
 	updatePosition++;
 }
 
-void Enemy::UpdatePos(uint16_t new_x, uint16_t new_y){
+void Enemy::UpdatePos(int new_x, uint16_t new_y){
 		x = new_x;
 		y = new_y;
 }
