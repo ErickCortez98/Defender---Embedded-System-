@@ -4,6 +4,7 @@
 
 #include "PlayerShip.h" 
 #include "Images.h" 
+#include "ST7735.h"
 
 #define RIGHT_XPOS 32
 #define LEFT_XPOS 138
@@ -21,17 +22,37 @@ PlayerShip::PlayerShip(){
 }
 
 void PlayerShip::Draw(){
+  static bool coming_from_hyper = false;
+  static int16_t last_x = 0;
+  static uint8_t last_y = 0;
+  
   if(dir == right){
     if(hyper){
+      coming_from_hyper = true;
+      last_x = x;
+      last_y = y;
       HRsprite.Draw(x + 2, y);
     }else{
+      if(coming_from_hyper == true){
+        ST7735_FillRect(last_y + 4, last_x - 23, 2, 3, ST7735_BLACK);
+        ST7735_DrawPixel(last_y + 3, last_x, ST7735_BLACK);
+      }
       Rsprite.Draw(x, y);
+      coming_from_hyper = false;
     }
   }else{
     if(hyper){
+      coming_from_hyper = true;
+      last_x = x;
+      last_y = y;
       HLsprite.Draw(x + 5, y);
     }else{
+      if(coming_from_hyper == true){
+        ST7735_FillRect(last_y + 4, last_x + 1, 2, 3, ST7735_BLACK);
+        ST7735_DrawPixel(last_y + 3, last_x - 20, ST7735_BLACK);
+      }
       Lsprite.Draw(x, y);
+      coming_from_hyper = false;
     }
   }
 }
