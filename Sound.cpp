@@ -5,8 +5,10 @@
 // Jonathan Valvano
 // 1/17/2020
 #include <stdint.h>
+#include "C:\Keil_v5\EE319KwareSpring2020\inc\TM4C123gh6pm.h"
 #include "Sound.h"
 #include "DAC.h"
+#include "Systick.h"
 
 const uint8_t shoot[4080] = {
   129, 99, 103, 164, 214, 129, 31, 105, 204, 118, 55, 92, 140, 225, 152, 61, 84, 154, 184, 101, 
@@ -1138,21 +1140,36 @@ const uint8_t highpitch[1802] = {
   250, 207};
 
 
-
-  
-  
+uint32_t Length;
+const uint8_t *SoundPt;
   
 void Sound_Init(void){
-// write this
+	DAC_Init(); //initializing the DAC
+	SysTick_Init(80000000/11000); //11kHz Systick Init
 };
+
+void SoundTask(){
+	if(Length){
+		DAC_Out(*SoundPt/8); //8 bit sound, 4-bit DAC (that's why we divide by 8)
+		SoundPt++;
+		Length--;
+	}else{
+		//DISABLE SYSTICK WITH INTERRUPTS
+		NVIC_ST_CTRL_R = 0x00000005;
+	}
+}
+  
 void Sound_Play(const uint8_t *pt, uint32_t count){
-// write this
+	Length = count;
+	SoundPt = pt;
+	//ENABLE SYSTICK WITH INTERRUPTS
+	NVIC_ST_CTRL_R = 0x00000007;
 };
 void Sound_Shoot(void){
-// write this
+	Sound_Play(shoot, 4080);
 };
 void Sound_Killed(void){
-// write this
+	Sound_Play(invaderkilled, 3377);
 };
 void Sound_Explosion(void){
 // write this

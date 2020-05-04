@@ -7,6 +7,8 @@
 #include "Images.h"
 #include "Random.h"
 #include "ST7735.h"
+#include "Sound.h"
+
 #define SCREENWIDTH 160
 #define MAXENEMIES 10
 
@@ -18,7 +20,7 @@ Enemy::Enemy (int x, uint8_t y, uint8_t typeEnemy, direction_t direction){
 			this->velocity = 1;
 		}else{	
 			enemySprite = Sprite(Enemy_2_Hyper, 8, 19);
-			this->live = 250; //max live of big enemy, TODO: change depending on the size of the bullet
+			this->live = 200; //max live of big enemy, TODO: change depending on the size of the bullet
 			this->velocity = 2;
 		}
 		this->direction  = direction;
@@ -81,6 +83,7 @@ void Enemy::Draw(uint8_t hyper, direction_t playerShipDirection, List<Bullet> *B
 	if(checkCollision(BulletList)){
 		this->live -=50; //reducing the enemy live points
 		if(this->getLive() == 0){
+			Sound_Killed();
 			status = dead;
 			return;
 		}
@@ -126,7 +129,7 @@ bool Enemy::checkCollision(List<Bullet> *BulletList){
 		if(this->velocity == 1){ //if enemy is of type 1, which we can get from its velocity
 			//if a bullet collisions with the enemy we return true
 			if(( /*checking x coordinates*/(((current->data->Getx()) > (x-10)) && ((current->data->Getx()) < x)) ) 
-					/*checking y coordinates*/ && ( ( ((current->data->Gety()) < (y+8)) && ((current->data->Gety()) > y) ) )  )  {
+					/*checking y coordinates*/ && ( ( ((current->data->Gety()) < (y+10)) && ((current->data->Gety()) > y) ) )  )  {
 				return true;
 			}
 		}else{
