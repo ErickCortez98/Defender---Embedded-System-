@@ -12,6 +12,7 @@
 
 #include <stdint.h>
 #include "C:\Keil_v5\EE319KwareSpring2020\inc\TM4C123gh6pm.h"
+#include "DAC.h"
 // Code files contain the actual implemenation for public functions
 // this file also contains an private functions and private data
 
@@ -31,7 +32,7 @@ void DAC_Init(void){volatile int delay;
 // Input: 4-bit data, 0 to 15 
 // Input=n is converted to n*3.3V/15
 // Output: none
-void DAC_Out(uint32_t data){
+void DAC_Out(uint8_t data){
   GPIO_PORTB_DATA_R &= ~0x0F;
   GPIO_PORTB_DATA_R |= data;
 }

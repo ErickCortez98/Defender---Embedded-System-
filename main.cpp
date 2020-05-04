@@ -70,12 +70,12 @@
 #include "HelperFns.h"
 #include "Enemy.h"
 #include "StartScreen.h"
+#include "Sound.h"
 
 extern "C" void DisableInterrupts(void);
 extern "C" void EnableInterrupts(void);
-extern "C" void SysTick_Handler(void);
+//extern "C" void SysTick_Handler(void);
 extern "C" void GPIOPortE_Handler(void);
-
 
 #define NULL 0
 #define MAXREACHSHIP 64
@@ -90,11 +90,12 @@ uint32_t time = 0;
 uint32_t timeEnemies = 0;
 uint8_t randomInitFlag = 1;
 uint8_t Flag = 1;
-uint32_t Score = 800;
+uint32_t Score = 550;
 uint8_t GameOn = 0;
 int spawnXLoc = 0;
 uint8_t spawnYLoc = 0;
 direction_t directionEnemy;
+
 
 void getSpawnLoc(void){
   spawnXLoc = RandomN(TERRAINSIZE); 
@@ -187,6 +188,7 @@ void GPIOPortE_Handler(void){
 			GPIO_PORTE_ICR_R = 0x1; //Acknowledge flag 0
 			Bullet* bullet = new Bullet(Player.Getx(), Player.Gety(), Player.GetDir());
 			BulletList.push_front(bullet);
+			Sound_Shoot();
 		}
 		
 		//checking random number generator
@@ -272,8 +274,8 @@ int main(void){
   PLL_Init(Bus80MHz);       // Bus clock is 80 MHz
   ADC_Init();
 	Buttons_Init();
+	Sound_Init(); //TODO: Complete it
 	EnableInterrupts();
-	SysTick_Init();
   Output_Init();
 	Heartbeat_Init();
   Timer1_Init(&clock,80000000); // 1 Hz
