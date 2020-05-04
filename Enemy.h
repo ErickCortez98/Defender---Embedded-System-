@@ -12,7 +12,7 @@ class Enemy{
 	private: 
 		Sprite enemySprite;
 		status_t status;
-		uint8_t live; // enemies staring life: 50 points of life for enemy 1, 100 points of life for enemy 2
+		int live; // enemies staring life: 50 points of life for enemy 1, 100 points of life for enemy 2
 		int x;
 		uint8_t y;
 		uint8_t updatePosition;

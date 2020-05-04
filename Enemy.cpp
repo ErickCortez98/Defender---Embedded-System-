@@ -18,7 +18,7 @@ Enemy::Enemy (int x, uint8_t y, uint8_t typeEnemy, direction_t direction){
 			this->velocity = 1;
 		}else{	
 			enemySprite = Sprite(Enemy_2_Hyper, 8, 19);
-			this->live = 100; //max live of big enemy
+			this->live = 250; //max live of big enemy, TODO: change depending on the size of the bullet
 			this->velocity = 2;
 		}
 		this->direction  = direction;
@@ -79,8 +79,11 @@ void Enemy::reduceLive(uint8_t liveReduction){
 }
 void Enemy::Draw(uint8_t hyper, direction_t playerShipDirection, List<Bullet> *BulletList){ 
 	if(checkCollision(BulletList)){
-		status = dead;
-		return;
+		this->live -=50; //reducing the enemy live points
+		if(this->getLive() == 0){
+			status = dead;
+			return;
+		}
 	} 
 	enemySprite.Draw(x, y);
 	if(direction == left){
