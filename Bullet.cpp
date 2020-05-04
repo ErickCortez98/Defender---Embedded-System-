@@ -2,7 +2,7 @@
 // Program written by: Jaxon Coward, Erick I. Cortez Valdez
 //Date created: 4/29/2020
 
-#include "Bullet.h" 
+#include "Bullet.h"
 #include <stdint.h>
 #include "Images.h"
 #include "ST7735.h"
@@ -47,18 +47,18 @@ Bullet::Bullet(int16_t new_x, uint8_t new_y, direction_t new_dir){
   if(dir == left){
     x -= 21;
   }
-  
+
   start_x = x - 1;
   y = new_y + 3;
-  
+
   color = ST7735_Color565(Random(), Random(), Random());
-  
+
 	bulletSprite = Sprite(BulletImage, 1, 2);
   status = alive;
 }
 
 
-void Bullet::Draw(){ 
+void Bullet::Draw(){
   int16_t length = 10;
   uint8_t pixel_deletion_factor = 3;
   if(dir == right){
@@ -74,7 +74,7 @@ void Bullet::Draw(){
       ST7735_DrawPixel(y, start_x - rnum + length, ST7735_BLACK);
     }
   }
-  
+
 	bulletSprite.Draw(x, y);
   if(dir == right){
     UpdatePos(x + 2, y);
@@ -95,7 +95,7 @@ void Bullet::UpdatePos(int16_t new_x, uint16_t new_y){
 int16_t Bullet::Getx(){
   return x;
 }
-  
+
 uint8_t Bullet::Gety(){
   return y;
 }
@@ -103,4 +103,3 @@ uint8_t Bullet::Gety(){
 status_t Bullet::GetStatus(){
   return status;
 }
-
