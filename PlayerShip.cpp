@@ -6,8 +6,8 @@
 #include "Images.h" 
 #include "ST7735.h"
 
-#define RIGHT_XPOS 32
-#define LEFT_XPOS 138
+#define RIGHT_XPOS 53
+#define LEFT_XPOS 128
 
 PlayerShip::PlayerShip(){
   Rsprite = Sprite(PlayerShipR, 10, 21);
