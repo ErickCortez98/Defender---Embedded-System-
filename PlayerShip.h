@@ -20,7 +20,6 @@ class PlayerShip{ private:
   uint8_t y;
   direction_t dir;
   bool hyper;
-  
 public:
 
   PlayerShip();

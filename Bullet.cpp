@@ -11,7 +11,7 @@
 uint8_t fireBulletFlag = 0;
 
 Bullet::Bullet(){
-	bulletSprite = Sprite(BulletImage, 5, 25);
+	bulletSprite = Sprite(Bullet_Laser, 1, 25);
   x = 0;
   y = 0;
   dir = right;;

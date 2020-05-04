@@ -9,6 +9,7 @@
 void drawStartScreen(void){
 	ST7735_FillScreen(0x0000); //Black screen
 	ST7735_DrawBitmap(60, 138, Defender_Logo, 26, 120); //Draw Defender logo image 
+	//ST7735_DrawBitmap(0, 12, Enemy_1, 12, 15);
 	ST7735_SetTextColor(ST7735_WHITE);
 	ST7735_SetRotation(1);
 	ST7735_SetCursor(8, 8);

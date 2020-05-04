@@ -78,7 +78,7 @@ extern "C" void GPIOPortE_Handler(void);
 
 
 #define NULL 0
-#define MAXREACHSHIP 70
+#define MAXREACHSHIP 75
 
 List<Bullet> BulletList;
 List<Enemy> EnemyList;
@@ -90,7 +90,7 @@ uint32_t time = 0;
 uint32_t timeEnemies = 0;
 uint8_t randomInitFlag = 1;
 uint8_t Flag = 1;
-uint32_t Score = 9950;
+uint32_t Score = 800;
 uint8_t GameOn = 0;
 int spawnXLoc = 0;
 uint8_t spawnYLoc = 0;
@@ -211,16 +211,17 @@ void DrawBullets(){
 }
 
 void DrawEnemies(){
-	//draw enemies that are currently in the enemyList
+	//draw enemies that are currently in the enemyList and check if an enemy has been killed to remove it from the list and increase score
 	Node<Enemy> *current = EnemyList.head;
 	while(current != NULL){
-			current->data->Draw(Player.GetHyper(), Player.GetDir()); //we sent true or false to the function to know if we increase or not the velocity
+			current->data->Draw(Player.GetHyper(), Player.GetDir(), &BulletList); //we sent true or false to the function to know if we increase or not the velocity
 		if(current->data->getStatus() == dead){
-			Score+=50;
+			if(current->data->getVelocity() == 1){
+				Score+=25; //increasing score because we've killed one enemy of type 1, so score increments by 25
+			}else{
+				Score+=50; //increasing score because we've killed one enemy of type 1, so score increments by 50
+			}
 			current = EnemyList.remove(current);
-
-			//ST7735_SetCursor(0,0);
-			//LCD_OutDec1(Score);
 		}else{
 			current = current->next;
 		}

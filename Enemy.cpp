@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include "Images.h"
 #include "Random.h"
+#include "ST7735.h"
 #define SCREENWIDTH 160
 #define MAXENEMIES 10
 
@@ -25,6 +26,15 @@ Enemy::Enemy (int x, uint8_t y, uint8_t typeEnemy, direction_t direction){
 		this->x = x;
 		this->y = y;
 		this->updatePosition = 0;
+}
+
+Enemy::~Enemy (){
+	//we'll delete the image of the enemy by putting a black image on top of it
+	if(this->velocity == 1){
+			ST7735_DrawBitmap(y, x, Black_Enemy_1, 12, 15);
+		}else{	
+			ST7735_DrawBitmap(y, x, Black_Enemy_2_Hyper, 8, 19);
+		}
 }
 //helper function to go up or down in the vertical positon
 int8_t Enemy::randomUpDownFn(){
@@ -67,7 +77,11 @@ uint8_t Enemy::getLive(){
 void Enemy::reduceLive(uint8_t liveReduction){
 	this->live -= liveReduction;
 }
-void Enemy::Draw(uint8_t hyper, direction_t playerShipDirection){ 
+void Enemy::Draw(uint8_t hyper, direction_t playerShipDirection, List<Bullet> *BulletList){ 
+	if(checkCollision(BulletList)){
+		status = dead;
+		return;
+	} 
 	enemySprite.Draw(x, y);
 	if(direction == left){
 		//updating enemy position to the left - this reduces the overall speed of both enemies as they move to the left and up and down as well, if the number is bigger in the condition
@@ -101,6 +115,33 @@ void Enemy::Draw(uint8_t hyper, direction_t playerShipDirection){
 void Enemy::UpdatePos(int new_x, uint16_t new_y){
 		x = new_x;
 		y = new_y;
+}
+
+bool Enemy::checkCollision(List<Bullet> *BulletList){
+	Node<Bullet>* current = (*BulletList).head;
+  while(current != NULL){
+		if(this->velocity == 1){ //if enemy is of type 1, which we can get from its velocity
+			//if a bullet collisions with the enemy we return true
+			if(( /*checking x coordinates*/(((current->data->Getx()) > (x-10)) && ((current->data->Getx()) < x)) ) 
+					/*checking y coordinates*/ && ( ( ((current->data->Gety()) < (y+8)) && ((current->data->Gety()) > y) ) )  )  {
+				return true;
+			}
+		}else{
+			//if a bullet collisions with the enemy we return true
+			if(( /*checking x coordinates*/(((current->data->Getx()) > (x-12)) && ((current->data->Getx()) < x)) ) 
+					/*checking y coordinates*/ && ( ( ((current->data->Gety()) < (y+6)) && ((current->data->Gety()) > y) ) )  )  {
+				return true;
+			}
+		}
+		//going to next bullet
+    current = current->next;
+	}
+	//if we have gone through the whole linked list of bullets and none touched the enemy, then we're good
+	return false;
+}
+
+uint8_t Enemy::getVelocity(){
+	return this->velocity;
 }
 
 
