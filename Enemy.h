@@ -14,7 +14,10 @@ class Enemy{
 		status_t status;
 		int live; // enemies staring life: 50 points of life for enemy 1, 100 points of life for enemy 2
 		int x;
+    int Abs_x;
 		uint8_t y;
+    int last_mapx;
+    uint8_t last_mapy;
 		uint8_t updatePosition;
 		uint8_t velocity; //we have different velocity depending on the enemy
 		direction_t direction; //if enemy has direction right, then it spawns from the left, otherwise it spawns from the right
@@ -32,4 +35,5 @@ class Enemy{
 		int8_t randomUpDownFn();
 		bool checkCollision(List<Bullet> *BulletList); //function that checks the x position of all the bullets and compares them with the enemy to decide if there has been a collision
 		uint8_t getVelocity();
+    void DrawMap();
 };

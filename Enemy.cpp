@@ -7,8 +7,11 @@
 #include "Images.h"
 #include "Random.h"
 #include "ST7735.h"
+#include "Terrain.h"
 #define SCREENWIDTH 160
 #define MAXENEMIES 10
+
+
 
 Enemy::Enemy (int x, uint8_t y, uint8_t typeEnemy, direction_t direction){
 		//if enemy's live is 50, then we now is enemy type 1, otherwise, it is 100, so the enmey is type 2
@@ -23,8 +26,9 @@ Enemy::Enemy (int x, uint8_t y, uint8_t typeEnemy, direction_t direction){
 		}
 		this->direction  = direction;
 		this->status = alive;
-		this->x = x;
-		this->y = y;
+    UpdatePos(x, y);
+    last_mapx = 0;
+    last_mapy = 0;
 		this->updatePosition = 0;
 }
 
@@ -32,9 +36,10 @@ Enemy::~Enemy (){
 	//we'll delete the image of the enemy by putting a black image on top of it
 	if(this->velocity == 1){
 			ST7735_DrawBitmap(y, x, Black_Enemy_1, 12, 15);
-		}else{	
-			ST7735_DrawBitmap(y, x, Black_Enemy_2_Hyper, 8, 19);
-		}
+  }else{	
+    ST7735_DrawBitmap(y, x, Black_Enemy_2_Hyper, 8, 19);
+  }
+  ST7735_DrawPixel(97 + last_mapy, 40 + last_mapx, ST7735_BLACK);
 }
 //helper function to go up or down in the vertical positon
 int8_t Enemy::randomUpDownFn(){
@@ -77,46 +82,68 @@ uint8_t Enemy::getLive(){
 void Enemy::reduceLive(uint8_t liveReduction){
 	this->live -= liveReduction;
 }
+
+void Enemy::DrawMap(){
+  int xpos = Abs_x/8 - 30;
+  if(xpos < 0){
+    xpos += MAPSIZE;
+  }else if(xpos >= MAPSIZE){
+    xpos -= MAPSIZE;
+  }
+  uint8_t ypos = y/2 - 10;
+  
+  ST7735_DrawPixel(97 + last_mapy, 40 + last_mapx, ST7735_BLACK);
+  ST7735_DrawPixel(97 + ypos, 40 + xpos, ST7735_GREEN);
+  
+  last_mapx = xpos;
+  last_mapy = ypos;
+}
+
+
 void Enemy::Draw(uint8_t hyper, direction_t playerShipDirection, List<Bullet> *BulletList){ 
-	if(checkCollision(BulletList)){
-		this->live -=50; //reducing the enemy live points
-		if(this->getLive() == 0){
-			status = dead;
-			return;
-		}
-	} 
-	enemySprite.Draw(x, y);
 	if(direction == left){
 		//updating enemy position to the left - this reduces the overall speed of both enemies as they move to the left and up and down as well, if the number is bigger in the condition
 		if(updatePosition == 3){
-			if(playerShipDirection == right){
-				UpdatePos(getX() - this->velocity - 2*hyper, getY()  + randomUpDownFn());
-			}else{
-				UpdatePos(getX() - this->velocity + 3*hyper, getY()  + randomUpDownFn());
-			}
+			UpdatePos(Abs_x - this->velocity, getY()  + randomUpDownFn());
+			
 			updatePosition = 0;
 		}
 	}else{
 		//updating enemy position to the right - this reduces the overall speed of both enemies as they move to the right and up and down as well, if the number is bigger in the condition
 		if(updatePosition == 3){
-			if(playerShipDirection == right){
-				UpdatePos(getX() + this->velocity - 3*hyper, getY()  + randomUpDownFn());
-			}else{
-				UpdatePos(getX() + this->velocity + 2*hyper, getY()  + randomUpDownFn());
-			}
+			UpdatePos(Abs_x + this->velocity, getY()  + randomUpDownFn());
 			updatePosition = 0;
 		}
 	}
 	
-	//Checking if we are outside the screen either in the left or right side meaning the status changes to dead alien (for now) 
-	if(x < -10 || x > SCREENWIDTH + 15){
-    status = dead;
-  }
 	updatePosition++;
+  
+  if(x >= 0){
+    if(checkCollision(BulletList)){
+      this->live -=50; //reducing the enemy live points
+      if(this->getLive() == 0){
+        status = dead;
+        return;
+      }
+    } 
+    enemySprite.Draw(x, y);
+  }
+  DrawMap();
 }
 
 void Enemy::UpdatePos(int new_x, uint16_t new_y){
-		x = new_x;
+		Abs_x = new_x;
+    if(Abs_x < 0){
+      Abs_x += TERRAINSIZE;
+    }else if(Abs_x >= TERRAINSIZE){
+      Abs_x -= TERRAINSIZE;
+    }
+    
+    if(Abs_x >= TerrainIndex && Abs_x < (TerrainIndex + SCREENWIDTH)){
+      this->x = Abs_x - TerrainIndex;
+    }else{
+      this->x = -10;
+    }
 		y = new_y;
 }
 

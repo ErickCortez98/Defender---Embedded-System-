@@ -78,7 +78,7 @@ extern "C" void GPIOPortE_Handler(void);
 
 
 #define NULL 0
-#define MAXREACHSHIP 75
+#define MAXREACHSHIP 64
 
 List<Bullet> BulletList;
 List<Enemy> EnemyList;
@@ -90,22 +90,29 @@ uint32_t time = 0;
 uint32_t timeEnemies = 0;
 uint8_t randomInitFlag = 1;
 uint8_t Flag = 1;
-uint32_t Score = 0;
+uint32_t Score = 800;
 uint8_t GameOn = 0;
 int spawnXLoc = 0;
 uint8_t spawnYLoc = 0;
 direction_t directionEnemy;
 
 void getSpawnLoc(void){
- //if Random function returns a 0, then we spawn from the right side of the screen, otherwise from the left
-	if(RandomN(2) == 0){
-		spawnXLoc = SCREENWIDTH+ RandomN(10);
-		directionEnemy = left;
-	}else{
-		spawnXLoc = RandomN(10); 
-		spawnXLoc = spawnXLoc*(-1);
-		directionEnemy = right;
-	}
+  spawnXLoc = RandomN(TERRAINSIZE); 
+  int distance = TerrainIndex - spawnXLoc;
+  if(distance < 0){
+    distance *= -1;
+    if(distance < TERRAINSIZE/2){
+      directionEnemy = left;
+    }else{
+      directionEnemy = right;
+    }
+  }else{
+    if(distance < TERRAINSIZE/2){
+      directionEnemy = right;
+    }else{
+      directionEnemy = left;
+    }
+  }
 }
 
 void addEnemies(){ //spawning rates are determined in this function
@@ -282,8 +289,7 @@ int main(void){
 //  ST7735_OutString((char*)"By Jaxon & Erick");
 //  wait(2);//wait 2 seconds before clearing screen
 	drawStartScreen(); //start screen which pauses the initialiation of the game 
-	while(!GameOn){
-	}
+	while(!GameOn){}
 
   ST7735_FillScreen(0x0000);
   DrawUI();
