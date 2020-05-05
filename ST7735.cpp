@@ -1276,7 +1276,7 @@ void fillmessage(uint32_t n){
 //         newY  new Y-position of the cursor (0<=newY<=15)
 // outputs: none
 void ST7735_SetCursor(uint32_t newX, uint32_t newY){
-  if((newX > 20) || (newY > 15)){       // bad input
+  if((newX > 30) || (newY > 15)){       // bad input
     return;                             // do nothing
   }
   StX = newX;
@@ -1295,8 +1295,8 @@ void ST7735_OutUDec(uint32_t n){
   Message[Messageindex] = 0; // terminate
   ST7735_DrawString(StX,StY,Message,StTextColor);
   StX = StX+Messageindex;
-  if(StX>20){
-    StX = 20;
+  if(StX>30){
+    StX = 30;
     ST7735_DrawCharS(StX*6,StY*10,'*',ST7735_RED,ST7735_BLACK, 1);
   }
 }
@@ -1641,8 +1641,8 @@ void ST7735_OutChar(char ch){
   }
   ST7735_DrawCharS(StX*6,StY*10,ch,ST7735_YELLOW,ST7735_BLACK, 1);
   StX++;
-  if(StX>20){
-    StX = 20;
+  if(StX>30){
+    StX = 30;
     ST7735_DrawCharS(StX*6,StY*10,'*',ST7735_RED,ST7735_BLACK, 1);
   }
   return;

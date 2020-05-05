@@ -84,6 +84,7 @@ extern "C" void GPIOPortE_Handler(void);
 List<Bullet> BulletList;
 List<Enemy> EnemyList;
 
+uint8_t PlayerLives = 3;
 PlayerShip Player;
 SlidePot Joystick(158,16);
 
@@ -250,15 +251,19 @@ void DrawEnemies(){
 			current->data->Draw(Player.GetHyper(), Player.GetDir(), &BulletList, Player.Getx(), Player.Gety()); //we sent true or false to the function to know if we increase or not the velocity
 		if(current->data->getStatus() == dead){
 			if(current->data->getCollisionPlayer() == 1){
-				//Player has lost because an enemy has touched them
-				Sound_Explosion(); //explosion sound 
-				GameOn = 0; //game is inactive now 
-				deleteEnemies(); //delete all enemies in the enemy list
-				deleteBullets(); //delete all bullets int the bullet list
-				drawYouLoseScreen(Score);
-				Score = 0; //restarting score to 0
-				wait(10);
-				return;
+        PlayerLives--;
+        Sound_Explosion(); //explosion sound 
+        if(!PlayerLives){
+          //Player has lost because an enemy has touched them
+          PlayerLives = 3;
+          GameOn = 0; //game is inactive now 
+          deleteEnemies(); //delete all enemies in the enemy list
+          deleteBullets(); //delete all bullets int the bullet list
+          drawYouLoseScreen(Score);
+          Score = 0; //restarting score to 0
+          wait(10);
+          return;
+        }
 			}
 			if(current->data->getVelocity() == 1){
 				Score+=25; //increasing score because we've killed one enemy of type 1, so score increments by 25
@@ -274,6 +279,8 @@ void DrawEnemies(){
 
 void DisplayScore(){
   ST7735_SetRotation(1);
+  ST7735_SetCursor(23, 2);
+  ST7735_OutUDec(PlayerLives);
   
   if(Score < 10){
     ST7735_SetCursor(5, 1);

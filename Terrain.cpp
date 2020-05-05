@@ -81,6 +81,10 @@ void DrawMap(){
 }
 
 void DrawUI(){
+  ST7735_SetRotation(1);
+	ST7735_SetCursor(21, 1);
+	ST7735_OutString((char*)"Lives");
+	ST7735_SetRotation(0);
   ST7735_DrawFastHLine(95, 39, 33, ST7735_GREEN);
   ST7735_DrawFastHLine(95, 121, 33, ST7735_GREEN);
   ST7735_DrawFastVLine(95, 0, 160, ST7735_GREEN);
