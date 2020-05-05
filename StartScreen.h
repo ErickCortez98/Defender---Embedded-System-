@@ -6,3 +6,5 @@
 void drawStartScreen(void);
 
 void drawYouLoseScreen(uint32_t Score);
+
+void drawLanguageScreen(void);

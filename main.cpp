@@ -94,11 +94,13 @@ uint8_t randomInitFlag = 1;
 uint8_t Flag = 1;
 uint32_t Score = 80000;
 uint8_t GameOn = 0;
+uint8_t Language = 0;//1 is english, 2 is spanish
 int spawnXLoc = 0;
 uint8_t spawnYLoc = 0;
 direction_t directionEnemy;
 
 void initialScreen(void);
+void languageScreen(void);
 void deleteEnemies(void);
 void deleteBullets(void);
 
@@ -194,7 +196,15 @@ void GPIOPortE_Handler(void){
 	//polling for FireButton
 	if(FireButton()){
     GPIO_PORTE_ICR_R = 0x1; //Acknowledge flag 0
-		if(!GameOn){ //We start the game if gameOn is 0 by setting GameOn to 1 meaning we get out of the loop of the main function
+    if(!Language){
+      uint8_t val = Joystick.GetY_Val() - 10;
+      if(val > 32){
+        Language = 1;//English
+      }else{
+        Language = 2;//Spanish
+      }
+      return;
+		}else if(!GameOn){ //We start the game if gameOn is 0 by setting GameOn to 1 meaning we get out of the loop of the main function
 			GameOn = 1;
 			return;
 		}else{
@@ -282,7 +292,10 @@ void DisplayScore(){
 }
 
 void background(void){
-	if(!GameOn){ //if GameOn = 0, we don't continue the task
+  if(!Language){
+    Joystick.Save(ADC_In());
+    return;
+	}else if(!GameOn){ //if GameOn = 0, we don't continue the task
 		return;
 	}
   Flag = 1;
@@ -331,13 +344,9 @@ int main(void){
 	while(!GameOn){} //start screen which pauses the initialiation of the game
 */	
 
-	initialScreen();
-	
-	ST7735_FillScreen(0x0000);
-  DrawUI();
-	
   Timer0_Init(&background,1600000); // 50 Hz
 	
+  languageScreen();
 
   while(1){
 		if(!GameOn){
@@ -359,4 +368,18 @@ int main(void){
 void initialScreen(void){
 	drawStartScreen();
 	while(!GameOn){} //start screen which pauses the initialiation of the game
+}
+
+void languageScreen(void){
+  drawLanguageScreen();
+  while(!Language){
+    uint8_t val = Joystick.GetY_Val() - 10;
+    if(val > 32){
+      ST7735_FillRect(43, 39, 3, 3, ST7735_BLACK);
+      ST7735_FillRect(53, 39, 3, 3, ST7735_BLUE);
+    }else{
+      ST7735_FillRect(53, 39, 3, 3, ST7735_BLACK);
+      ST7735_FillRect(43, 39, 3, 3, ST7735_BLUE);
+    }
+  }
 }

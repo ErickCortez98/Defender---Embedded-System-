@@ -36,3 +36,16 @@ void drawYouLoseScreen(uint32_t Score){
 	}
 	ST7735_SetRotation(0);
 }
+
+void drawLanguageScreen(void){
+	ST7735_FillScreen(0x0000); //Black screen
+	ST7735_SetTextColor(ST7735_WHITE);
+	ST7735_SetRotation(1);
+	ST7735_SetCursor(5, 5);
+	ST7735_OutString((char*)"Select Language");
+  ST7735_SetCursor(8, 7);
+	ST7735_OutString((char*)"English");
+  ST7735_SetCursor(8, 8);
+	ST7735_OutString((char*)"Spanish");
+	ST7735_SetRotation(0);
+}
