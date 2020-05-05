@@ -184,13 +184,13 @@ void GPIOPortE_Handler(void){
 
 	//polling for FireButton
 	if(FireButton()){
+    GPIO_PORTE_ICR_R = 0x1; //Acknowledge flag 0
 		if(!GameOn){ //We start the game if gameOn is 0 by setting GameOn to 1 meaning we get out of the loop of the main function
 			GameOn = 1;
 			//redrawing screen and UI after the game is in pause or you've lost
 			ST7735_FillScreen(0x0000);
 			DrawUI();
 		}else{
-			GPIO_PORTE_ICR_R = 0x1; //Acknowledge flag 0
 			Bullet* bullet = new Bullet(Player.Getx(), Player.Gety(), Player.GetDir());
 			BulletList.push_front(bullet);
 			Sound_Shoot();
