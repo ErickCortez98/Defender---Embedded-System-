@@ -116,5 +116,7 @@ bool PlayerShip::GetHyper(){
   return hyper;
 }
 
-
+/*bool PlayerShip::collision(List<Enemy> *EnemyList){
+	return false;
+}*/
 

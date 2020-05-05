@@ -92,12 +92,15 @@ uint32_t time = 0;
 uint32_t timeEnemies = 0;
 uint8_t randomInitFlag = 1;
 uint8_t Flag = 1;
-uint32_t Score = 800;
+uint32_t Score = 80000;
 uint8_t GameOn = 0;
 int spawnXLoc = 0;
 uint8_t spawnYLoc = 0;
 direction_t directionEnemy;
 
+void initialScreen(void);
+void deleteEnemies(void);
+void deleteBullets(void);
 
 void getSpawnLoc(void){
   spawnXLoc = RandomN(TERRAINSIZE); 
@@ -162,6 +165,9 @@ void addEnemies(){ //spawning rates are determined in this function
 void clock(void){
   time++;
 	toggle_Heartbeat();
+	if(!GameOn){ //if GameOn = 0, we don't continue the periodic task
+		return;
+	}
 	//every 3 seconds we add enemies depending on the current Score of the user
 	//TODO: change the spawning rate, decreasing the seconds if Scores increments more
 	if(GameOn){
@@ -173,7 +179,10 @@ void clock(void){
 	}
 }
 
-
+void wait(uint32_t sec){
+  uint32_t i = time;
+  while((time - i) < sec){}
+}
 
 void GPIOPortE_Handler(void){
 	//initializing random number class with seed as the current systick value when the user presses a button for the first time
@@ -187,9 +196,7 @@ void GPIOPortE_Handler(void){
     GPIO_PORTE_ICR_R = 0x1; //Acknowledge flag 0
 		if(!GameOn){ //We start the game if gameOn is 0 by setting GameOn to 1 meaning we get out of the loop of the main function
 			GameOn = 1;
-			//redrawing screen and UI after the game is in pause or you've lost
-			ST7735_FillScreen(0x0000);
-			DrawUI();
+			return;
 		}else{
 			Bullet* bullet = new Bullet(Player.Getx(), Player.Gety(), Player.GetDir());
 			BulletList.push_front(bullet);
@@ -199,6 +206,9 @@ void GPIOPortE_Handler(void){
 		//checking random number generator
 		//ST7735_SetCursor(0,200);
 		//LCD_OutDec1(Random());
+	}
+	if(!GameOn){ //if game on is 0, we don't continue the polling
+		return;
 	}
 	//polling for HyperButton
 	if(HyperButton()){
@@ -223,13 +233,23 @@ void DrawBullets(){
     }
   }
 }
-
 void DrawEnemies(){
 	//draw enemies that are currently in the enemyList and check if an enemy has been killed to remove it from the list and increase score
 	Node<Enemy> *current = EnemyList.head;
 	while(current != NULL){
-			current->data->Draw(Player.GetHyper(), Player.GetDir(), &BulletList); //we sent true or false to the function to know if we increase or not the velocity
+			current->data->Draw(Player.GetHyper(), Player.GetDir(), &BulletList, Player.Getx(), Player.Gety()); //we sent true or false to the function to know if we increase or not the velocity
 		if(current->data->getStatus() == dead){
+			if(current->data->getCollisionPlayer() == 1){
+				//Player has lost because an enemy has touched them
+				Sound_Explosion(); //explosion sound 
+				GameOn = 0; //game is inactive now 
+				deleteEnemies(); //delete all enemies in the enemy list
+				deleteBullets(); //delete all bullets int the bullet list
+				drawYouLoseScreen(Score);
+				Score = 0; //restarting score to 0
+				wait(10);
+				return;
+			}
 			if(current->data->getVelocity() == 1){
 				Score+=25; //increasing score because we've killed one enemy of type 1, so score increments by 25
 			}else{
@@ -262,6 +282,9 @@ void DisplayScore(){
 }
 
 void background(void){
+	if(!GameOn){ //if GameOn = 0, we don't continue the task
+		return;
+	}
   Flag = 1;
 
   UpdateTerrainIndex(Player.GetDir(), Player.GetHyper());
@@ -270,9 +293,18 @@ void background(void){
   Player.UpdatePos(Player.Getx(), Joystick.GetY_Val());
 }
 
-void wait(uint32_t sec){
-  uint32_t i = time;
-  while((time - i) < sec){}
+void deleteEnemies(){ //class that deletes all the enemy nodes in the enemy linked list
+	Node<Enemy> *current = EnemyList.head;
+	while(current!= NULL){
+		current = EnemyList.remove(current);
+	}
+}
+
+void deleteBullets(){
+	Node<Bullet> *current = BulletList.head;
+	while(current!= NULL){
+		current = BulletList.remove(current);
+	}
 }
 
 int main(void){
@@ -295,31 +327,36 @@ int main(void){
 //  ST7735_SetTextColor(ST7735_WHITE);
 //  ST7735_OutString((char*)"By Jaxon & Erick");
 //  wait(2);//wait 2 seconds before clearing screen
-	drawStartScreen();
+	/*drawStartScreen();
 	while(!GameOn){} //start screen which pauses the initialiation of the game
+*/	
 
-  ST7735_FillScreen(0x0000);
+	initialScreen();
+	
+	ST7735_FillScreen(0x0000);
   DrawUI();
-
+	
   Timer0_Init(&background,1600000); // 50 Hz
 	
 
   while(1){
-		while(!GameOn){} //start screen which pauses the initialiation of the game
+		if(!GameOn){
+			initialScreen();
+			ST7735_FillScreen(0x0000);
+			DrawUI();
+		}
     while(Flag == 0){}
     Flag = 0;
     DrawTerrain();
     DrawBullets();
     DrawEnemies();
     Player.Draw();
-		//checking for Player's collision
-		/*if(Player.Collision(&EnemyList)){
-			ST7735_FillScreen(0x0000);
-			drawStartScreen();
-			GameOn = 0;
-		}*/
     DrawMap();
     DisplayScore();
   }
+}
 
+void initialScreen(void){
+	drawStartScreen();
+	while(!GameOn){} //start screen which pauses the initialiation of the game
 }

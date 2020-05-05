@@ -5,6 +5,7 @@
 #include "Sprite.h"
 #include "C:\Keil_v5\EE319KwareSpring2020\inc\TM4C123gh6pm.h"
 
+
 #ifndef PLAYERSHIP_H
 #define PLAYERSHIP_H
 #include <stdint.h>
@@ -29,6 +30,7 @@ public:
   uint8_t Gety();
   void ToggleDirection();
   direction_t GetDir();
+
 
   void ToggleHyper();
   bool GetHyper();

@@ -33,6 +33,7 @@ Enemy::Enemy (int x, uint8_t y, uint8_t typeEnemy, direction_t direction){
     last_mapx = 0;
     last_mapy = 0;
 		this->updatePosition = 0;
+		this->collisionPlayer = 0;
 }
 
 Enemy::~Enemy (){
@@ -103,7 +104,7 @@ void Enemy::DrawMap(){
 }
 
 
-void Enemy::Draw(uint8_t hyper, direction_t playerShipDirection, List<Bullet> *BulletList){
+void Enemy::Draw(uint8_t hyper, direction_t playerShipDirection, List<Bullet> *BulletList, uint16_t player_x, uint8_t player_y){
   if(updatePosition == 3){
     if(direction == left){
       UpdatePos(Abs_x - this->velocity, getY()  + randomUpDownFn());
@@ -118,6 +119,12 @@ void Enemy::Draw(uint8_t hyper, direction_t playerShipDirection, List<Bullet> *B
 	updatePosition++;
 
   if(x >= 0){
+		if(checkCollisionPlayer(player_x, player_y)){
+				Sound_Killed();
+        status = dead;
+				collisionPlayer = 1;
+        return;
+		}
     if(checkCollision(BulletList)){
       this->live -=50; //reducing the enemy live points
       if(this->getLive() == 0){
@@ -187,4 +194,16 @@ bool Enemy::checkCollision(List<Bullet> *BulletList){
 
 uint8_t Enemy::getVelocity(){
 	return this->velocity;
+}
+
+uint8_t Enemy::getCollisionPlayer(){
+	return collisionPlayer;
+}
+
+uint8_t Enemy::checkCollisionPlayer(int16_t player_x, int8_t player_y){
+	if( ((player_x >= this->x - 10 ) && (player_x - 21 <= this->x - 10)) && ((player_y >= this->y) && (player_y <= this->y +10)) ){
+		return 1;
+	}else{
+		return 0;
+	}
 }

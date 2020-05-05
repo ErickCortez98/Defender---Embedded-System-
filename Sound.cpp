@@ -1172,7 +1172,7 @@ void Sound_Killed(void){
 	Sound_Play(invaderkilled, 3377);
 };
 void Sound_Explosion(void){
-// write this
+	Sound_Play(explosion, 2000);
 };
 
 void Sound_Fastinvader1(void){

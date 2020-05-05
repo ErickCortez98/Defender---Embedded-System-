@@ -4,6 +4,7 @@
 
 #include <stdint.h>
 
+
 #ifndef LIST_H
 #define LIST_H
 
@@ -17,7 +18,9 @@ class Node{
     Node *prev;
 };  
 
+
 template<class T>
+
 class List{ 
 private:
 	uint8_t length;
