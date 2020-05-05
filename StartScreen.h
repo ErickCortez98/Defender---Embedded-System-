@@ -3,8 +3,8 @@
 //Date created: 05/03/2020
 #include <stdint.h>
 
-void drawStartScreen(void);
+void drawStartScreen(uint8_t Language);
 
-void drawYouLoseScreen(uint32_t Score);
+void drawYouLoseScreen(uint32_t Score, uint8_t Language);
 
 void drawLanguageScreen(void);

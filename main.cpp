@@ -106,6 +106,9 @@ void deleteBullets(void);
 
 void getSpawnLoc(void){
   spawnXLoc = RandomN(TERRAINSIZE); 
+	if(spawnXLoc == Player.Getx()){
+		spawnXLoc += 160;
+	}
   int distance = TerrainIndex - spawnXLoc;
   if(distance < 0){
     distance *= -1;
@@ -255,7 +258,7 @@ void DrawEnemies(){
 				GameOn = 0; //game is inactive now 
 				deleteEnemies(); //delete all enemies in the enemy list
 				deleteBullets(); //delete all bullets int the bullet list
-				drawYouLoseScreen(Score);
+				drawYouLoseScreen(Score, Language);
 				Score = 0; //restarting score to 0
 				wait(10);
 				return;
@@ -366,7 +369,7 @@ int main(void){
 }
 
 void initialScreen(void){
-	drawStartScreen();
+	drawStartScreen(Language);
 	while(!GameOn){} //start screen which pauses the initialiation of the game
 }
 
