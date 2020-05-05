@@ -121,6 +121,7 @@ void Enemy::Draw(uint8_t hyper, direction_t playerShipDirection, List<Bullet> *B
     if(checkCollision(BulletList)){
       this->live -=50; //reducing the enemy live points
       if(this->getLive() == 0){
+				Sound_Killed();
         status = dead;
         return;
       }
