@@ -77,6 +77,7 @@ extern "C" void EnableInterrupts(void);
 //extern "C" void SysTick_Handler(void);
 extern "C" void GPIOPortE_Handler(void);
 
+
 #define NULL 0
 #define MAXREACHSHIP 64
 
@@ -86,11 +87,12 @@ List<Enemy> EnemyList;
 PlayerShip Player;
 SlidePot Joystick(158,16);
 
+
 uint32_t time = 0;
 uint32_t timeEnemies = 0;
 uint8_t randomInitFlag = 1;
 uint8_t Flag = 1;
-uint32_t Score = 550;
+uint32_t Score = 0;
 uint8_t GameOn = 0;
 int spawnXLoc = 0;
 uint8_t spawnYLoc = 0;
@@ -304,8 +306,8 @@ int main(void){
     Flag = 0;
     DrawTerrain();
     DrawBullets();
+    DrawEnemies();
     Player.Draw();
-		DrawEnemies();
     DrawMap();
     DisplayScore();
   }

@@ -7,6 +7,8 @@
 
 #define TERRAINSPEEDMAX 64
 
+int16_t TerrainIndex = 0;
+
 void DrawTerrain(){
   for(int i = 0; i < SCREENWIDTH; i++){
     

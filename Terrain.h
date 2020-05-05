@@ -14,7 +14,7 @@
 #define TERRAINSIZE 640
 #define MAPSIZE 80
 
-static int16_t TerrainIndex = 0;
+extern int16_t TerrainIndex;
 static int16_t LastTerrainIndex = TERRAINSIZE;
 
 

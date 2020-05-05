@@ -9,6 +9,7 @@
 #include "ST7735.h"
 #include "Terrain.h"
 #include "Sound.h"
+#include "HelperFns.h"//ONLY FOR DEBUG PURPOSES
 
 #define SCREENWIDTH 160
 #define MAXENEMIES 10
@@ -103,20 +104,16 @@ void Enemy::DrawMap(){
 
 
 void Enemy::Draw(uint8_t hyper, direction_t playerShipDirection, List<Bullet> *BulletList){
-	if(direction == left){
-		//updating enemy position to the left - this reduces the overall speed of both enemies as they move to the left and up and down as well, if the number is bigger in the condition
-		if(updatePosition == 3){
-			UpdatePos(Abs_x - this->velocity, getY()  + randomUpDownFn());
-
-			updatePosition = 0;
-		}
-	}else{
-		//updating enemy position to the right - this reduces the overall speed of both enemies as they move to the right and up and down as well, if the number is bigger in the condition
-		if(updatePosition == 3){
-			UpdatePos(Abs_x + this->velocity, getY()  + randomUpDownFn());
-			updatePosition = 0;
-		}
-	}
+  if(updatePosition == 3){
+    if(direction == left){
+      UpdatePos(Abs_x - this->velocity, getY()  + randomUpDownFn());
+    }else{
+      UpdatePos(Abs_x + this->velocity, getY()  + randomUpDownFn());
+    }
+    updatePosition = 0;
+  }else{
+    UpdatePos(Abs_x, getY()  + randomUpDownFn());
+  }
 
 	updatePosition++;
 
@@ -128,8 +125,8 @@ void Enemy::Draw(uint8_t hyper, direction_t playerShipDirection, List<Bullet> *B
         return;
       }
     }
-    enemySprite.Draw(x, y);
   }
+  enemySprite.Draw(x, y);
   DrawMap();
 }
 
@@ -140,9 +137,24 @@ void Enemy::UpdatePos(int new_x, uint16_t new_y){
     }else if(Abs_x >= TERRAINSIZE){
       Abs_x -= TERRAINSIZE;
     }
-
-    if(Abs_x >= TerrainIndex && Abs_x < (TerrainIndex + SCREENWIDTH)){
-      this->x = Abs_x - TerrainIndex;
+    int temp_Abs_x = Abs_x;
+    if((TerrainIndex + SCREENWIDTH) >= TERRAINSIZE && temp_Abs_x < SCREENWIDTH){
+      temp_Abs_x += TERRAINSIZE;
+    }
+    
+    //=============DEBUG PURPOSE ONLY
+//    ST7735_SetRotation(1);
+//    ST7735_SetCursor(1, 2);
+//    LCD_OutDec1(TerrainIndex);
+//    
+//    ST7735_SetCursor(1, 3); 
+//    LCD_OutDec1(temp_Abs_x);
+//    ST7735_SetRotation(0);
+    //=============DEBUG PURPOSE ONLY
+    
+    
+    if(temp_Abs_x >= TerrainIndex && temp_Abs_x < (TerrainIndex + SCREENWIDTH)){
+      this->x = temp_Abs_x - TerrainIndex;
     }else{
       this->x = -10;
     }
