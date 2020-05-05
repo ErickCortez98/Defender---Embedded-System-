@@ -262,7 +262,7 @@ void DrawEnemies(){
           GameOn = 0; //game is inactive now 
           deleteEnemies(); //delete all enemies in the enemy list
           deleteBullets(); //delete all bullets int the bullet list
-          drawYouLoseScreen(Score);
+          drawYouLoseScreen(Score, Language);
           Score = 0; //restarting score to 0
           wait(10);
           return;
