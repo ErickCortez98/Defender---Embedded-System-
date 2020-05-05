@@ -87,7 +87,7 @@ void Enemy::reduceLive(uint8_t liveReduction){
 }
 
 void Enemy::DrawMap(){
-  int xpos = Abs_x/8 - 30;
+  int xpos = Abs_x/8 - (TerrainIndex/8) + 30;
   if(xpos < 0){
     xpos += MAPSIZE;
   }else if(xpos >= MAPSIZE){
