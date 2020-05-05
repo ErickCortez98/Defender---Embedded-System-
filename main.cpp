@@ -186,6 +186,9 @@ void GPIOPortE_Handler(void){
 	if(FireButton()){
 		if(!GameOn){ //We start the game if gameOn is 0 by setting GameOn to 1 meaning we get out of the loop of the main function
 			GameOn = 1;
+			//redrawing screen and UI after the game is in pause or you've lost
+			ST7735_FillScreen(0x0000);
+			DrawUI();
 		}else{
 			GPIO_PORTE_ICR_R = 0x1; //Acknowledge flag 0
 			Bullet* bullet = new Bullet(Player.Getx(), Player.Gety(), Player.GetDir());
@@ -292,8 +295,8 @@ int main(void){
 //  ST7735_SetTextColor(ST7735_WHITE);
 //  ST7735_OutString((char*)"By Jaxon & Erick");
 //  wait(2);//wait 2 seconds before clearing screen
-	drawStartScreen(); //start screen which pauses the initialiation of the game 
-	while(!GameOn){}
+	drawStartScreen();
+	while(!GameOn){} //start screen which pauses the initialiation of the game
 
   ST7735_FillScreen(0x0000);
   DrawUI();
@@ -302,12 +305,19 @@ int main(void){
 	
 
   while(1){
+		while(!GameOn){} //start screen which pauses the initialiation of the game
     while(Flag == 0){}
     Flag = 0;
     DrawTerrain();
     DrawBullets();
     DrawEnemies();
     Player.Draw();
+		//checking for Player's collision
+		/*if(Player.Collision(&EnemyList)){
+			ST7735_FillScreen(0x0000);
+			drawStartScreen();
+			GameOn = 0;
+		}*/
     DrawMap();
     DisplayScore();
   }
