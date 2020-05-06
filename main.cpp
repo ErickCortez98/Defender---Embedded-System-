@@ -95,6 +95,7 @@ uint8_t randomInitFlag = 1;
 uint8_t Flag = 1;
 uint32_t Score = 80000;
 uint8_t GameOn = 0;
+uint8_t GameOver = 0;
 uint8_t Language = 0;//1 is english, 2 is spanish
 int spawnXLoc = 0;
 uint8_t spawnYLoc = 0;
@@ -259,12 +260,10 @@ void DrawEnemies(){
         if(!PlayerLives){
           //Player has lost because an enemy has touched them
           PlayerLives = 3;
-          GameOn = 0; //game is inactive now 
           deleteEnemies(); //delete all enemies in the enemy list
           deleteBullets(); //delete all bullets int the bullet list
-          drawYouLoseScreen(Score, Language);
-          Score = 0; //restarting score to 0
-          wait(10);
+          Score = 0;
+          GameOver = 1;
           return;
         }
 			}
@@ -363,15 +362,22 @@ int main(void){
 			initialScreen();
 			ST7735_FillScreen(0x0000);
 			DrawUI();
-		}
-    while(Flag == 0){}
-    Flag = 0;
-    DrawTerrain();
-    DrawBullets();
-    DrawEnemies();
-    Player.Draw();
-    DrawMap();
-    DisplayScore();
+		}else if(GameOver){
+      drawYouLoseScreen(Score, Language);
+      wait(10);
+      ST7735_FillScreen(0x0000); //Black screen
+      GameOn = 0; //game is inactive now 
+      GameOver = 0;
+    }else{
+      while(Flag == 0){}
+      Flag = 0;
+      DrawTerrain();
+      DrawBullets();
+      DrawEnemies();
+      Player.Draw();
+      DrawMap();
+      DisplayScore();
+    }
   }
 }
 
