@@ -290,8 +290,21 @@ void DrawBulletsEnemies(){
 	//draw bullets of enemies that are currently in the bulletEnemylist and check if an enemy bullet has been marked as dead to erase it from the list
 	Node<EnemyBullet> *current = EnemyBulletList.head;
 	while(current != NULL){
-		current->data->Draw();
+		current->data->Draw(Player.Getx(), Player.Gety());
 		if(current->data->GetStatus() == dead){
+			if(current->data->getCollisionPlayer() == 1){
+        PlayerLives--;
+        Sound_Explosion(); //explosion sound 
+        if(!PlayerLives){
+          //Player has lost because an enemy has touched them
+          PlayerLives = 3;
+          deleteEnemies(); //delete all enemies in the enemy list
+          deleteBullets(); //delete all bullets int the bullet list
+          Score = 0;
+          GameOver = 1;
+          return;
+        }
+			}
 			current = EnemyBulletList.remove(current);
 		}else{
 			current = current->next;
@@ -301,10 +314,12 @@ void DrawBulletsEnemies(){
 
 void shootPlayer(int16_t player_x, uint8_t player_y, int16_t enemy_x, uint8_t enemy_y){
 	//randomly decide if we add an enemyBullet to the enemyBullet linked list
-	if(countBulletShoot == 50){ //shooting Bullet every second
-		EnemyBullet *enemyBullet = new EnemyBullet(enemy_x, enemy_y, player_x, player_y); //we create a new enemy in a random x location
-		EnemyBulletList.push_front(enemyBullet); //we add the enemy bullet to the list
-		countBulletShoot = 0; //change this to random(35) probably
+	if(countBulletShoot == 150){ //shooting Bullet every second
+		if(EnemyBulletList.getLength()<2){
+				EnemyBullet *enemyBullet = new EnemyBullet(enemy_x, enemy_y, player_x, player_y); //we create a new enemy in a random x location
+				EnemyBulletList.push_front(enemyBullet); //we add the enemy bullet to the list
+				countBulletShoot = RandomN(35); //change this to random(35) probably
+		}
 	}
 	countBulletShoot++;
 }
