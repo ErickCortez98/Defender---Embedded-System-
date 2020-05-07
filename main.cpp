@@ -389,7 +389,7 @@ int main(void){
 		if(!GameOn){
 			initialScreen();
 			ST7735_FillScreen(0x0000);
-			DrawUI();
+			DrawUI(Language);
 		}else if(GameOver){
       drawYouLoseScreen(Score, Language);
       wait(10);
