@@ -231,6 +231,7 @@ void GPIOPortE_Handler(void){
 	//polling for HyperButton
 	if(HyperButton()){
 		GPIO_PORTE_ICR_R = 0x2; //Acknowledge flag 1
+		//Sound_Engine();
     Player.ToggleHyper();
 	}
 	//polling for DirButton
@@ -278,7 +279,7 @@ void DrawEnemies(){
 		}else{
 			if(RandomN(2) == 1){
 				//comment this out to not have bullets showing up
-				shootPlayer(Player.Getx(), Player.Gety(), current->data->getX(), current->data->getY()); //probably shooting enemy at this point
+				//shootPlayer(Player.Getx(), Player.Gety(), current->data->getX(), current->data->getY()); //probably shooting enemy at this point
 			}
 			current = current->next;
 		}
@@ -289,7 +290,7 @@ void DrawBulletsEnemies(){
 	//draw bullets of enemies that are currently in the bulletEnemylist and check if an enemy bullet has been marked as dead to erase it from the list
 	Node<EnemyBullet> *current = EnemyBulletList.head;
 	while(current != NULL){
-		current->data->Draw(Player.Getx(), Player.Gety());
+		current->data->Draw(Player.GetHyper(),  Player.GetDir(),Player.Getx(), Player.Gety());
 		if(current->data->GetStatus() == dead){
 			if(current->data->getCollisionPlayer() == 1){
         PlayerLives--;
@@ -416,7 +417,7 @@ int main(void){
       DrawTerrain();
       DrawBullets();
       DrawEnemies();
-	  DrawBulletsEnemies();//comment this out to not have enemy bullets showing up
+	  //DrawBulletsEnemies();//comment this out to not have enemy bullets showing up
       Player.Draw();
       DrawMap();
       DisplayScore();

@@ -21,7 +21,7 @@ class EnemyBullet{
 public:
 	EnemyBullet(int16_t new_x, uint8_t new_y, uint16_t player_x, uint8_t player_y);
   /*~EnemyBullet();*/ //we probably don't need destructor
-  void Draw(uint16_t player_x, uint8_t player_y);
+  void Draw(uint8_t hyper, direction_t playerShipDirection,uint16_t player_x, uint8_t player_y);
   void UpdatePos(int16_t x, uint16_t y);
   int16_t Getx();
   uint8_t Gety();

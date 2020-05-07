@@ -38,7 +38,7 @@ EnemyBullet::EnemyBullet(int16_t origin_x, uint8_t origin_y, uint16_t inplayer_x
   }
 }*/
 
-void EnemyBullet::Draw(uint16_t player_x, uint8_t player_y){
+void EnemyBullet::Draw(uint8_t hyper, direction_t playerShipDirection,uint16_t player_x, uint8_t player_y){
 	//checking if bullet is out of bounds
 	if(this->x > SCREENWIDTH || this->x < 0 || this->y > 75 || this->y < 5){ //if bullet goes out of bound we return and mark it as dead to be able to erase it form the linked list 
 		ST7735_DrawPixel(last_y, last_x, ST7735_BLACK); //erasing previous bullet
@@ -63,9 +63,17 @@ void EnemyBullet::Draw(uint16_t player_x, uint8_t player_y){
 	//update position by using direction and slope gotten in determineSlope() and send the new x and y to updatePos(x, y)
 	if(slope == 0){ //meaning we are going up down left or right
 		if(dirEnemyBullet == Left){
-			UpdatePos(this->x - 1, this->y);
+			/*if(playerShipDirection == right){
+				UpdatePos(this->x - (1+hyper), this->y);
+			}else{
+				UpdatePos(this->x - (hyper), this->y);
+			}*/
 		}else if(dirEnemyBullet == Right){
-			UpdatePos(this->x + 1, this->y);
+			/*if(playerShipDirection == right){
+				UpdatePos(this->x + 1, this->y);
+			}else{
+			
+			}*/
 		}else if(dirEnemyBullet == Up){
 			UpdatePos(this->x, this->y + 1);
 		}else{
