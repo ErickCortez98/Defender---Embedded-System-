@@ -40,7 +40,7 @@ EnemyBullet::EnemyBullet(int16_t origin_x, uint8_t origin_y, uint16_t inplayer_x
 
 void EnemyBullet::Draw(uint16_t player_x, uint8_t player_y){
 	//checking if bullet is out of bounds
-	if(this->x > SCREENWIDTH || this->x < 0 || this->y > 70 || this->y < 5){ //if bullet goes out of bound we return and mark it as dead to be able to erase it form the linked list 
+	if(this->x > SCREENWIDTH || this->x < 0 || this->y > 75 || this->y < 5){ //if bullet goes out of bound we return and mark it as dead to be able to erase it form the linked list 
 		ST7735_DrawPixel(last_y, last_x, ST7735_BLACK); //erasing previous bullet
 		status = dead;
 		return;
@@ -169,7 +169,7 @@ void EnemyBullet::determineSlope(int16_t player_x, uint8_t player_y){ //determin
 
 
 uint8_t EnemyBullet::checkCollisionPlayer(int16_t player_x, int8_t player_y){
-	if( ((player_x - 15 <= this->x ) && (player_x >= this->x)) && ((player_y + 7 >= this->y) && (player_y <= this->y)) ){
+	if( ((player_x - 20 <= this->x ) && (player_x >= this->x)) && ((player_y + 7 >= this->y) && (player_y <= this->y)) ){
 		return 1;
 	}else{
 		return 0;

@@ -265,7 +265,6 @@ void DrawEnemies(){
           PlayerLives = 3;
           deleteEnemies(); //delete all enemies in the enemy list
           deleteBullets(); //delete all bullets int the bullet list
-          Score = 0;
           GameOver = 1;
           return;
         }
@@ -300,7 +299,6 @@ void DrawBulletsEnemies(){
           PlayerLives = 3;
           deleteEnemies(); //delete all enemies in the enemy list
           deleteBullets(); //delete all bullets int the bullet list
-          Score = 0;
           GameOver = 1;
           return;
         }
@@ -408,6 +406,7 @@ int main(void){
 		}else if(GameOver){
       drawYouLoseScreen(Score, Language);
       wait(10);
+			Score = 0;
       ST7735_FillScreen(0x0000); //Black screen
       GameOn = 0; //game is inactive now 
       GameOver = 0;
