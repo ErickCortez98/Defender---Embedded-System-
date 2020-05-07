@@ -81,8 +81,7 @@ void UpdateTerrainIndex(direction_t dir, bool hyper);
 
 void DrawMap();
 
-void DrawUI();
-
+void DrawUI(uint8_t Language);
 
 
 #endif

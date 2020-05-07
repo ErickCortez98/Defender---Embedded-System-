@@ -80,10 +80,16 @@ void DrawMap(){
   }
 }
 
-void DrawUI(){
+void DrawUI(uint8_t Language){
   ST7735_SetRotation(1);
 	ST7735_SetCursor(21, 1);
-	ST7735_OutString((char*)"Lives");
+	
+	if(Language == 1){ //english
+		ST7735_OutString((char*)"Lives");
+	}else{	//spanish
+		ST7735_OutString((char*)"Vidas");	
+	}
+	
 	ST7735_SetRotation(0);
   ST7735_DrawFastHLine(95, 39, 33, ST7735_GREEN);
   ST7735_DrawFastHLine(95, 121, 33, ST7735_GREEN);

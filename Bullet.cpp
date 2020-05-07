@@ -103,3 +103,4 @@ uint8_t Bullet::Gety(){
 status_t Bullet::GetStatus(){
   return status;
 }
+

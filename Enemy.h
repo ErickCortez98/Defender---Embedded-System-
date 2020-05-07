@@ -7,10 +7,12 @@
 #include "PlayerShip.h"
 #include "List.h"
 #include "Bullet.h"
+#include "EnemyBullet.h"
 
 class Enemy{
 	private: 
 		Sprite enemySprite;
+		List<EnemyBullet> EnemyBulletList; //linked list that'll contain all the bullets of the enemies
 		status_t status;
 		int live; // enemies staring life: 50 points of life for enemy 1, 100 points of life for enemy 2
 		int x;
@@ -22,6 +24,7 @@ class Enemy{
 		uint8_t velocity; //we have different velocity depending on the enemy
 		direction_t direction; //if enemy has direction right, then it spawns from the left, otherwise it spawns from the right
 		uint8_t collisionPlayer; //variable that tell us if we have collisioned with the main player - 1 for collision
+		
 	public:
 		Enemy(int x, uint8_t y, uint8_t typeEnemy, direction_t direction);//constructor, we specify the type of our enemy and its direction
 		~Enemy(); //destructor of enemy class which allows to delete the enemy

@@ -83,6 +83,7 @@ extern "C" void GPIOPortE_Handler(void);
 
 List<Bullet> BulletList;
 List<Enemy> EnemyList;
+List<EnemyBullet> EnemyBulletList;
 
 uint8_t PlayerLives = 3;
 PlayerShip Player;
@@ -98,12 +99,14 @@ uint8_t GameOn = 0;
 uint8_t Language = 0;//1 is english, 2 is spanish
 int spawnXLoc = 0;
 uint8_t spawnYLoc = 0;
+uint8_t countBulletShoot = 0;   //will count up to 50 and shoot a bullet, meaning that the enemies are shooting bullets every 1 to 2 seconds
 direction_t directionEnemy;
 
 void initialScreen(void);
 void languageScreen(void);
 void deleteEnemies(void);
 void deleteBullets(void);
+void shootPlayer(int16_t player_x, uint8_t player_y, int16_t enemy_x, uint8_t enemy_y);
 
 void getSpawnLoc(void){
   spawnXLoc = RandomN(TERRAINSIZE); 
@@ -275,11 +278,37 @@ void DrawEnemies(){
 			}
 			current = EnemyList.remove(current);
 		}else{
+			if(RandomN(2) == 1){
+				//comment this out to not have bullets showing up
+				shootPlayer(Player.Getx(), Player.Gety(), current->data->getX(), current->data->getY()); //probably shooting enemy at this point
+			}
 			current = current->next;
 		}
 	}
 }
 
+void DrawBulletsEnemies(){ 
+	//draw bullets of enemies that are currently in the bulletEnemylist and check if an enemy bullet has been marked as dead to erase it from the list
+	Node<EnemyBullet> *current = EnemyBulletList.head;
+	while(current != NULL){
+		current->data->Draw();
+		if(current->data->GetStatus() == dead){
+			current = EnemyBulletList.remove(current);
+		}else{
+			current = current->next;
+		}
+	}
+}
+
+void shootPlayer(int16_t player_x, uint8_t player_y, int16_t enemy_x, uint8_t enemy_y){
+	//randomly decide if we add an enemyBullet to the enemyBullet linked list
+	if(countBulletShoot == 50){ //shooting Bullet every second
+		EnemyBullet *enemyBullet = new EnemyBullet(enemy_x, enemy_y, player_x, player_y); //we create a new enemy in a random x location
+		EnemyBulletList.push_front(enemyBullet); //we add the enemy bullet to the list
+		countBulletShoot = 0; //change this to random(35) probably
+	}
+	countBulletShoot++;
+}
 void DisplayScore(){
   ST7735_SetRotation(1);
   ST7735_SetCursor(23, 2);
@@ -339,7 +368,7 @@ int main(void){
   Output_Init();
 	Heartbeat_Init();
   Timer1_Init(&clock,80000000); // 1 Hz
-
+	ST7735_DrawPixel(10, 10, ST7735_WHITE); //Y, X
 
 
 //  ST7735_FillScreen(0x0000);            // set screen to black
@@ -355,20 +384,20 @@ int main(void){
 */	
 
   Timer0_Init(&background,1600000); // 50 Hz
-	
   languageScreen();
 
   while(1){
 		if(!GameOn){
 			initialScreen();
 			ST7735_FillScreen(0x0000);
-			DrawUI();
+			DrawUI(Language);
 		}
     while(Flag == 0){}
     Flag = 0;
-    DrawTerrain();
-    DrawBullets();
+    DrawTerrain(); 
+    DrawBullets(); 
     DrawEnemies();
+		DrawBulletsEnemies();//comment this out to not have enemy bullets showing up
     Player.Draw();
     DrawMap();
     DisplayScore();

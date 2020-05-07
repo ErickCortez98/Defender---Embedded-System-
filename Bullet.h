@@ -28,7 +28,6 @@ public:
   int16_t Getx();
   uint8_t Gety();
   status_t GetStatus();
-
 };
 
 
